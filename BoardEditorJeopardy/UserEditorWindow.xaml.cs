@@ -5,39 +5,28 @@ namespace BoardEditorJeopardy;
 
 public partial class UserEditorWindow : Window
 {
-    private string _userOne;
-    private string _userTwo;
-    private string _userThree;
+    private List<string> _users;
     
     
-    public UserEditorWindow (string userOne, string userTwo, string userThree)
+    public UserEditorWindow (List<string> users)
     {
         InitializeComponent();
-        
-        _userOne = userOne;
-        _userTwo = userTwo;
-        _userThree = userThree;
-        
-        UserOneTextBox.Text = _userOne;
-        UserTwoTextBox.Text = _userTwo;
-        UserThreeTextBox.Text = _userThree;
+
+        _users = users;
+        Users.ItemsSource = _users;
     }
     
     
     private void SaveButton_Click (object sender, RoutedEventArgs e)
     {
-        _userOne = UserOneTextBox.Text;
-        _userTwo = UserTwoTextBox.Text;
-        _userThree = UserThreeTextBox.Text;
-        
         Close();
     }
     
     
-    public static (string, string, string) ShowDialog (string userOne, string userTwo, string userThree)
+    public static List<string> ShowDialog (List<string> users)
     {
-        var dialog = new UserEditorWindow(userOne, userTwo, userThree);
+        var dialog = new UserEditorWindow(users);
         dialog.ShowDialog();
-        return (dialog._userOne, dialog._userTwo, dialog._userThree);
+        return dialog._users;
     }
 }

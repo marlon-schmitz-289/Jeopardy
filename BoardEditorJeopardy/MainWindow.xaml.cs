@@ -18,7 +18,8 @@ public partial class MainWindow : Window
 
     private readonly List<Question> _questions;
     private readonly List<string> _categories;
-    private readonly List<string> _users;
+    
+    private List<string> _users;
 
     #endregion
 
@@ -391,7 +392,7 @@ public partial class MainWindow : Window
 
     private void EditUsers_OnClick(object sender, RoutedEventArgs e)
     {
-        (_users[0], _users[1], _users[2]) = UserEditorWindow.ShowDialog(_users[0], _users[1], _users[2]);
+        _users = UserEditorWindow.ShowDialog(_users);
     }
 
     #endregion

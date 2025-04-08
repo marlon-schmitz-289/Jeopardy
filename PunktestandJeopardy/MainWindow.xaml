@@ -6,7 +6,8 @@
         mc:Ignorable="d"
         Title="MainWindow"
         Height="500"
-        Width="910">
+        Width="910"
+        Loaded="MainWindow_OnLoaded">
     <Viewbox Stretch="Fill">
         <Grid>
             <Grid.Background>

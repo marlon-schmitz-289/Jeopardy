@@ -11,62 +11,21 @@
         Width="250">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="5*" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <ListView Grid.Row="0"
+                  x:Name="Users"
+                  Margin="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBox Text="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Text="User 1:"
-                   Margin="5"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Right" />
-
-        <TextBox Grid.Row="0"
-                 Grid.Column="1"
-                 Margin="5"
-                 x:Name="UserOneTextBox"
-                 HorizontalAlignment="Stretch"
-                 VerticalContentAlignment="Center" />
-
-        <TextBlock Grid.Row="1"
-                   Grid.Column="0"
-                   Text="User 2:"
-                   Margin="5"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Right" />
-
-        <TextBox Grid.Row="1"
-                 Grid.Column="1"
-                 Margin="5"
-                 x:Name="UserTwoTextBox"
-                 HorizontalAlignment="Stretch"
-                 VerticalContentAlignment="Center" />
-
-        <TextBlock Grid.Row="2"
-                   Grid.Column="0"
-                   Text="User 3:"
-                   Margin="5"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Right" />
-
-        <TextBox Grid.Row="2"
-                 Grid.Column="1"
-                 Margin="5"
-                 x:Name="UserThreeTextBox"
-                 HorizontalAlignment="Stretch"
-                 VerticalContentAlignment="Center" />
-
-        <Button Grid.Row="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
+        <Button Grid.Row="1"
                 Margin="5"
                 Content="Save"
                 Click="SaveButton_Click" />

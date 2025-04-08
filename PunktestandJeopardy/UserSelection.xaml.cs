@@ -20,15 +20,7 @@ public partial class UserSelection : Window
 
     private void Confirm_Click(object sender, RoutedEventArgs e)
     {
-        _selectedUsers = Users.SelectedItems.OfType<string>().ToList();
-    }
-    
-    
-    public static List<string> Show(List<string> usernames)
-    {
-        var window = new UserSelection(usernames);
-        window.ShowDialog();
-        return window._selectedUsers;
+        Close();
     }
 
     private void SelectedUsers_Changed(object sender, SelectionChangedEventArgs e)
@@ -42,5 +34,13 @@ public partial class UserSelection : Window
         {
             _selectedUsers.RemoveAll(e.RemovedItems.OfType<string>().ToList().Contains);
         }
+    }
+    
+    
+    public static List<string> Show(List<string> usernames)
+    {
+        var window = new UserSelection(usernames);
+        window.ShowDialog();
+        return window._selectedUsers;
     }
 }

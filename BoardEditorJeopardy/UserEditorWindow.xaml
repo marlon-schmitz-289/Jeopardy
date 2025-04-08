@@ -1,0 +1,74 @@
+﻿<Window x:Class="BoardEditorJeopardy.UserEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:BoardEditorJeopardy"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title=""
+        Height="200"
+        Width="250">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="User 1:"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right" />
+
+        <TextBox Grid.Row="0"
+                 Grid.Column="1"
+                 Margin="5"
+                 x:Name="UserOneTextBox"
+                 HorizontalAlignment="Stretch"
+                 VerticalContentAlignment="Center" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="User 2:"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right" />
+
+        <TextBox Grid.Row="1"
+                 Grid.Column="1"
+                 Margin="5"
+                 x:Name="UserTwoTextBox"
+                 HorizontalAlignment="Stretch"
+                 VerticalContentAlignment="Center" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="User 3:"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right" />
+
+        <TextBox Grid.Row="2"
+                 Grid.Column="1"
+                 Margin="5"
+                 x:Name="UserThreeTextBox"
+                 HorizontalAlignment="Stretch"
+                 VerticalContentAlignment="Center" />
+
+        <Button Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="5"
+                Content="Save"
+                Click="SaveButton_Click" />
+    </Grid>
+</Window>

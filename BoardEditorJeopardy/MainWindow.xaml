@@ -1,0 +1,331 @@
+﻿<Window x:Class="BoardEditorJeopardy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title=""
+        Height="680"
+        Width="900">
+    <Viewbox>
+        <Grid Height="450"
+              Width="600">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Content="Category 1"
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="lblColTitleOne"
+                        Click="LblColTitleOne_OnClick" />
+
+                <Button Grid.Column="1"
+                        Content="Category 2"
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="lblColTitleTwo"
+                        Click="LblColTitleTwo_OnClick" />
+
+                <Button Grid.Column="2"
+                        Content="Category 3"
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="lblColTitleThree"
+                        Click="LblColTitleThree_OnClick" />
+
+                <Button Grid.Column="3"
+                        Content="Category 4"
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="lblColTitleFour"
+                        Click="LblColTitleFour_OnClick" />
+
+                <Button Grid.Column="4"
+                        Content="Category 5"
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="lblColTitleFive"
+                        Click="LblColTitleFive_OnClick" />
+
+                <Button Grid.Column="5"
+                        Content="Category 6"
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="lblColTitleSix"
+                        Click="LblColTitleSix_OnClick" />
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0"
+                        Content="200"
+                        Grid.Column="0"
+                        Margin="5"
+                        Name="btnCatOneOne"
+                        Click="btnCatOneOne_Click" />
+
+                <Button Grid.Row="1"
+                        Content="400"
+                        Grid.Column="0"
+                        Margin="5"
+                        Name="btnCatOneTwo"
+                        Click="btnCatOneTwo_Click" />
+
+                <Button Grid.Row="2"
+                        Content="600"
+                        Grid.Column="0"
+                        Margin="5"
+                        Name="btnCatOneThree"
+                        Click="btnCatOneThree_Click" />
+
+                <Button Grid.Row="3"
+                        Content="800"
+                        Grid.Column="0"
+                        Margin="5"
+                        Name="btnCatOneFour"
+                        Click="btnCatOneFour_Click" />
+
+                <Button Grid.Row="4"
+                        Content="1000"
+                        Grid.Column="0"
+                        Margin="5"
+                        Name="btnCatOneFive"
+                        Click="btnCatOneFive_Click" />
+
+                <Button Grid.Row="0"
+                        Content="200"
+                        Grid.Column="1"
+                        Margin="5"
+                        Name="btnCatTwoOne"
+                        Click="btnCatTwoOne_Click" />
+
+                <Button Grid.Row="1"
+                        Content="400"
+                        Grid.Column="1"
+                        Margin="5"
+                        Name="btnCatTwoTwo"
+                        Click="btnCatTwoTwo_Click" />
+
+                <Button Grid.Row="2"
+                        Content="600"
+                        Grid.Column="1"
+                        Margin="5"
+                        Name="btnCatTwoThree"
+                        Click="btnCatTwoThree_Click" />
+
+                <Button Grid.Row="3"
+                        Content="800"
+                        Grid.Column="1"
+                        Margin="5"
+                        Name="btnCatTwoFour"
+                        Click="btnCatTwoFour_Click" />
+
+                <Button Grid.Row="4"
+                        Content="1000"
+                        Grid.Column="1"
+                        Margin="5"
+                        Name="btnCatTwoFive"
+                        Click="btnCatTwoFive_Click" />
+
+                <Button Grid.Row="0"
+                        Content="200"
+                        Grid.Column="2"
+                        Margin="5"
+                        Name="btnCatThreeOne"
+                        Click="btnCatThreeOne_Click" />
+
+                <Button Grid.Row="1"
+                        Content="400"
+                        Grid.Column="2"
+                        Margin="5"
+                        Name="btnCatThreeTwo"
+                        Click="btnCatThreeTwo_Click" />
+
+                <Button Grid.Row="2"
+                        Content="600"
+                        Grid.Column="2"
+                        Margin="5"
+                        Name="btnCatThreeThree"
+                        Click="btnCatThreeThree_Click" />
+
+                <Button Grid.Row="3"
+                        Content="800"
+                        Grid.Column="2"
+                        Margin="5"
+                        Name="btnCatThreeFour"
+                        Click="btnCatThreeFour_Click" />
+
+                <Button Grid.Row="4"
+                        Content="1000"
+                        Grid.Column="2"
+                        Margin="5"
+                        Name="btnCatThreeFive"
+                        Click="btnCatThreeFive_Click" />
+
+                <Button Grid.Row="0"
+                        Content="200"
+                        Grid.Column="3"
+                        Margin="5"
+                        Name="btnCatFourOne"
+                        Click="btnCatFourOne_Click" />
+
+                <Button Grid.Row="1"
+                        Content="400"
+                        Grid.Column="3"
+                        Margin="5"
+                        Name="btnCatFourTwo"
+                        Click="btnCatFourTwo_Click" />
+
+                <Button Grid.Row="2"
+                        Content="600"
+                        Grid.Column="3"
+                        Margin="5"
+                        Name="btnCatFourThree"
+                        Click="btnCatFourThree_Click" />
+
+                <Button Grid.Row="3"
+                        Content="800"
+                        Grid.Column="3"
+                        Margin="5"
+                        Name="btnCatFourFour"
+                        Click="btnCatFourFour_Click" />
+
+                <Button Grid.Row="4"
+                        Content="1000"
+                        Grid.Column="3"
+                        Margin="5"
+                        Name="btnCatFourFive"
+                        Click="btnCatFourFive_Click" />
+
+                <Button Grid.Row="0"
+                        Content="200"
+                        Grid.Column="4"
+                        Margin="5"
+                        Name="btnCatFiveOne"
+                        Click="btnCatFiveOne_Click" />
+
+                <Button Grid.Row="1"
+                        Content="400"
+                        Grid.Column="4"
+                        Margin="5"
+                        Name="btnCatFiveTwo"
+                        Click="btnCatFiveTwo_Click" />
+
+                <Button Grid.Row="2"
+                        Content="600"
+                        Grid.Column="4"
+                        Margin="5"
+                        Name="btnCatFiveThree"
+                        Click="btnCatFiveThree_Click" />
+
+                <Button Grid.Row="3"
+                        Content="800"
+                        Grid.Column="4"
+                        Margin="5"
+                        Name="btnCatFiveFour"
+                        Click="btnCatFiveFour_Click" />
+
+                <Button Grid.Row="4"
+                        Content="1000"
+                        Grid.Column="4"
+                        Margin="5"
+                        Name="btnCatFiveFive"
+                        Click="btnCatFiveFive_Click" />
+
+                <Button Grid.Row="0"
+                        Content="200"
+                        Grid.Column="5"
+                        Margin="5"
+                        Name="btnCatSixOne"
+                        Click="btnCatSixOne_Click" />
+
+                <Button Grid.Row="1"
+                        Content="400"
+                        Grid.Column="5"
+                        Margin="5"
+                        Name="btnCatSixTwo"
+                        Click="btnCatSixTwo_Click" />
+
+                <Button Grid.Row="2"
+                        Content="600"
+                        Grid.Column="5"
+                        Margin="5"
+                        Name="btnCatSixThree"
+                        Click="btnCatSixThree_Click" />
+
+                <Button Grid.Row="3"
+                        Content="800"
+                        Grid.Column="5"
+                        Margin="5"
+                        Name="btnCatSixFour"
+                        Click="btnCatSixFour_Click" />
+
+                <Button Grid.Row="4"
+                        Content="1000"
+                        Grid.Column="5"
+                        Margin="5"
+                        Name="btnCatSixFive"
+                        Click="btnCatSixFive_Click" />
+
+            </Grid>
+
+            <Button Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="5"
+                    Content="Edit users"
+                    Click="EditUsers_OnClick" />
+
+            <Button Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="5"
+                    Content="Save"
+                    Click="Save_OnClick" />
+        </Grid>
+    </Viewbox>
+</Window>

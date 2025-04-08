@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:BoardEditorJeopardy"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title=""
@@ -12,20 +11,32 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
-            <RowDefinition />
+            <RowDefinition MinHeight="35" />
+            <RowDefinition MinHeight="35" />
         </Grid.RowDefinitions>
 
         <ListView Grid.Row="0"
                   x:Name="Users"
-                  Margin="5">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBox Text="{Binding}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                  Margin="5" />
 
-        <Button Grid.Row="1"
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Click="AddUser_Click"
+                    Grid.Column="0"
+                    Content="+"
+                    Margin="5" />
+
+            <Button Click="RemoveUser_Click"
+                    Grid.Column="1"
+                    Content="-"
+                    Margin="5" />
+        </Grid>
+
+        <Button Grid.Row="2"
                 Margin="5"
                 Content="Save"
                 Click="SaveButton_Click" />

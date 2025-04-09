@@ -8,21 +8,162 @@
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <FontFamily x:Key="CoolFont"> pack://application:,,,/font.ttf#JetBrains Mono </FontFamily>
+
+        <Style x:Key="CoolLabelTextBlock"
+               TargetType="Label">
+            <Setter Property="Background"
+                    Value="Azure" />
+
+            <Setter Property="Foreground"
+                    Value="Black" />
+
+            <Setter Property="FontFamily"
+                    Value="{StaticResource CoolFont}" />
+
+            <Setter Property="BorderThickness"
+                    Value="0" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Grid x:Name="RootGrid"
+                              Background="{TemplateBinding Background}"
+                              Width="{TemplateBinding Width}"
+                              Height="{TemplateBinding Height}">
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       FontWeight="{TemplateBinding FontWeight}"
+                                       Margin="{TemplateBinding Padding}"
+                                       TextWrapping="WrapWithOverflow"
+                                       VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch"
+                                       Height="Auto"
+                                       Width="Auto"
+                                       TextAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CoolLabel"
+               TargetType="Label">
+            <Setter Property="Background"
+                    Value="Azure" />
+
+            <Setter Property="Foreground"
+                    Value="Black" />
+
+            <Setter Property="FontFamily"
+                    Value="{StaticResource CoolFont}" />
+
+            <Setter Property="BorderThickness"
+                    Value="0" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Grid x:Name="RootGrid"
+                              Background="{TemplateBinding Background}"
+                              Width="{TemplateBinding Width}"
+                              Height="{TemplateBinding Height}">
+                            <Label Content="{TemplateBinding Content}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   Margin="{TemplateBinding Padding}"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalAlignment="Stretch"
+                                   Height="Auto"
+                                   Width="Auto"
+                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CoolButton"
+               TargetType="Button">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource CoolFont}" />
+
+            <Setter Property="FontSize"
+                    Value="20" />
+
+            <Setter Property="Background"
+                    Value="Azure" />
+
+            <Setter Property="Foreground"
+                    Value="Black" />
+
+            <Setter Property="BorderThickness"
+                    Value="0" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid"
+                              Background="{TemplateBinding Background}"
+                              Width="{TemplateBinding Width}"
+                              Height="{TemplateBinding Height}">
+                            <Label Content="{TemplateBinding Content}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalContentAlignment="Center"
+                                   HorizontalContentAlignment="Center" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="RootGrid"
+                                        Property="Background"
+                                        Value="LightBlue" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter TargetName="RootGrid"
+                                        Property="Background"
+                                        Value="DeepSkyBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    
+
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1"
+                                 StartPoint="0.5,0">
+                <GradientStop Color="White"
+                              Offset="0" />
+                <GradientStop Color="#FFFF86BD"
+                              Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
         <Image x:Name="Image"
                Margin="5"
                Width="Auto"
                Height="Auto"
                Visibility="Collapsed" />
 
-        <TextBlock x:Name="Text"
-                   Margin="5"
-                   MinWidth="100"
-                   Width="Auto"
-                   Height="25"
-                   Visibility="Collapsed" />
+        <Label x:Name="Text"
+               Margin="5"
+               VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch"
+               Style="{StaticResource CoolLabelTextBlock}"
+               Visibility="Collapsed" />
 
         <StackPanel Orientation="Horizontal"
                     x:Name="Audio"
@@ -30,14 +171,13 @@
                     Visibility="Visible">
             <Button Margin="5"
                     Width="25"
-                    FontFamily="{StaticResource CoolFont}"
+                    Style="{StaticResource CoolButton}"
                     Content="&#x25B6;"
                     Click="Play_Click" />
 
             <Button Margin="5"
                     Width="25"
-                    FontFamily="{StaticResource CoolFont}"
-                    FontWeight="Bold"
+                    Style="{StaticResource CoolButton}"
                     Content="&#x25A0;"
                     Click="Stop_Click" />
 
@@ -45,6 +185,9 @@
                    Content="Not playing..."
                    HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Style="{StaticResource CoolLabel}"
                    Margin="5" />
         </StackPanel>
     </Grid>

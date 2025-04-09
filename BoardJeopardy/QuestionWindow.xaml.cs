@@ -7,13 +7,15 @@ namespace BoardJeopardy;
 
 public partial class QuestionWindow : Window
 {
-    private Question _question;
     private MediaPlayer _mediaPlayer = new MediaPlayer();
+    private QuestionType _questionType;
+    private string _question;
     
-    private QuestionWindow(Question question, string title)
+    private QuestionWindow(Question question, string title, bool isAnswer = false)
     {
         InitializeComponent();
-        _question = question;
+        _questionType = question.QuType;
+        _question = isAnswer ? question.Questi : question.Answer;
         Title = title;
         
         Init();
@@ -21,7 +23,7 @@ public partial class QuestionWindow : Window
 
     private void Init()
     {
-        switch (_question.QuType)
+        switch (_questionType)
         {
             default:
             case QuestionType.Text:
@@ -30,10 +32,10 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Collapsed;
                 Image.Visibility = Visibility.Collapsed;
                 
-                Text.Text = _question.Questi;
+                Text.Content = _questionType;
 
                 Width = 300;
-                Height = 80;
+                Height = 90;
                 break;
             }
             case QuestionType.Audio:
@@ -42,10 +44,10 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Visible;
                 Image.Visibility = Visibility.Collapsed;
                 
-                _mediaPlayer.Open(new Uri(_question.Questi));
+                _mediaPlayer.Open(new Uri(_question));
                 
                 Width = 300;
-                Height = 80;
+                Height = 90;
                 break;
             }
             case QuestionType.Image:
@@ -54,10 +56,10 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Collapsed;
                 Image.Visibility = Visibility.Visible;
                 
-                Image.Source = new BitmapImage(new Uri(_question.Questi));
+                Image.Source = new BitmapImage(new Uri(_question));
                 
-                Width = 500;
-                Height = 500;
+                Width = Image.Source.Width + 20;
+                Height = Image.Source.Height + 20;
                 break;
                 
             }
@@ -92,7 +94,9 @@ public partial class QuestionWindow : Window
         var window = new QuestionWindow(question, title);
         window.ShowDialog();
         window._mediaPlayer.Close();
-
-        MessageBox.Show(question.Answer, window.Title);
+        
+        window = new QuestionWindow(question, title, true);
+        window.ShowDialog();
+        window._mediaPlayer.Close();
     }
 }

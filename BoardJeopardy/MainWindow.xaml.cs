@@ -8,13 +8,7 @@ namespace BoardJeopardy;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private static readonly string _FOLDER_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CoolJeopardy");
-    private static readonly string _USERNAMES_PATH = Path.Combine(_FOLDER_PATH, "users.txt");
-    private static readonly string _CATEGORIES_PATH = Path.Combine(_FOLDER_PATH, "categories.txt");
-    private static readonly string _QUESTIONS_PATH = Path.Combine(_FOLDER_PATH, "questions.txt");
-
-    private readonly List<Question> _questions;
-
+#region constructor
 
     public MainWindow()
     {
@@ -32,6 +26,10 @@ public partial class MainWindow : Window
         }
     }
 
+#endregion
+
+
+#region loaded
 
     private void MainWindow_OnLoaded (object sender, RoutedEventArgs e)
     {
@@ -45,6 +43,22 @@ public partial class MainWindow : Window
         pmw.Show();
     }
 
+#endregion
+
+
+#region fields
+
+    private static readonly string _FOLDER_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CoolJeopardy");
+    private static readonly string _USERNAMES_PATH = Path.Combine(_FOLDER_PATH, "users.txt");
+    private static readonly string _CATEGORIES_PATH = Path.Combine(_FOLDER_PATH, "categories.txt");
+    private static readonly string _QUESTIONS_PATH = Path.Combine(_FOLDER_PATH, "questions.txt");
+
+    private readonly List<Question> _questions;
+
+#endregion
+
+
+#region read and set stuff
 
     private IEnumerable<string> ReadUsernames()
     {
@@ -83,12 +97,12 @@ public partial class MainWindow : Window
     private void SetCategories()
     {
         var categories = ReadCategories().ToArray();
-        lblColTitleOne.Content = categories[0];
-        lblColTitleTwo.Content = categories[1];
-        lblColTitleThree.Content = categories[2];
-        lblColTitleFour.Content = categories[3];
-        lblColTitleFive.Content = categories[4];
-        lblColTitleSix.Content = categories[5];
+        ColTitleOne.Content = categories[0];
+        ColTitleTwo.Content = categories[1];
+        ColTitleThree.Content = categories[2];
+        ColTitleFour.Content = categories[3];
+        ColTitleFive.Content = categories[4];
+        ColTitleSix.Content = categories[5];
     }
 
 
@@ -121,32 +135,39 @@ public partial class MainWindow : Window
         return ret;
     }
 
+#endregion
+
 
 #region Category One
 
-    public void btnCatOneOne_Click (object sender, EventArgs e)
+    private void CatOneOne_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[0], $"{lblColTitleOne.Content} - {btnCatOneOne.Content}");
+        QuestionWindow.Show(_questions[0], $"{ColTitleOne.Content} - {CatOneOne.Content}", this);
+        CatOneOne.IsEnabled = false;
     }
 
-    public void btnCatOneTwo_Click (object sender, EventArgs e)
+    private void CatOneTwo_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[1], $"{lblColTitleOne.Content} - {btnCatOneTwo.Content}");
+        QuestionWindow.Show(_questions[1], $"{ColTitleOne.Content} - {CatOneTwo.Content}", this);
+        CatOneTwo.IsEnabled = false;
     }
 
-    public void btnCatOneThree_Click (object sender, EventArgs e)
+    private void CatOneThree_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[2], $"{lblColTitleOne.Content} - {btnCatOneThree.Content}");
+        QuestionWindow.Show(_questions[2], $"{ColTitleOne.Content} - {CatOneThree.Content}", this);
+        CatOneThree.IsEnabled = false;
     }
 
-    public void btnCatOneFour_Click (object sender, EventArgs e)
+    private void CatOneFour_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[3], $"{lblColTitleOne.Content} - {btnCatOneFour.Content}");
+        QuestionWindow.Show(_questions[3], $"{ColTitleOne.Content} - {CatOneFour.Content}", this);
+        CatOneFour.IsEnabled = false;
     }
 
-    public void btnCatOneFive_Click (object sender, EventArgs e)
+    private void CatOneFive_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[4], $"{lblColTitleOne.Content} - {btnCatOneFive.Content}");
+        QuestionWindow.Show(_questions[4], $"{ColTitleOne.Content} - {CatOneFive.Content}", this);
+        CatOneFive.IsEnabled = false;
     }
 
 #endregion
@@ -154,29 +175,34 @@ public partial class MainWindow : Window
 
 #region Category Two
 
-    public void btnCatTwoOne_Click (object sender, EventArgs e)
+    private void CatTwoOne_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[5], $"{lblColTitleTwo.Content} - {btnCatTwoOne.Content}");
+        QuestionWindow.Show(_questions[5], $"{ColTitleTwo.Content} - {CatTwoOne.Content}", this);
+        CatTwoOne.IsEnabled = false;
     }
 
-    public void btnCatTwoTwo_Click (object sender, EventArgs e)
+    private void CatTwoTwo_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[6], $"{lblColTitleTwo.Content} - {btnCatTwoTwo.Content}");
+        QuestionWindow.Show(_questions[6], $"{ColTitleTwo.Content} - {CatTwoTwo.Content}", this);
+        CatTwoTwo.IsEnabled = false;
     }
 
-    public void btnCatTwoThree_Click (object sender, EventArgs e)
+    private void CatTwoThree_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[7], $"{lblColTitleTwo.Content} - {btnCatTwoThree.Content}");
+        QuestionWindow.Show(_questions[7], $"{ColTitleTwo.Content} - {CatTwoThree.Content}", this);
+        CatTwoThree.IsEnabled = false;
     }
 
-    public void btnCatTwoFour_Click (object sender, EventArgs e)
+    private void CatTwoFour_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[8], $"{lblColTitleTwo.Content} - {btnCatTwoFour.Content}");
+        QuestionWindow.Show(_questions[8], $"{ColTitleTwo.Content} - {CatTwoFour.Content}", this);
+        CatTwoFour.IsEnabled = false;
     }
 
-    public void btnCatTwoFive_Click (object sender, EventArgs e)
+    private void CatTwoFiveClick (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[9], $"{lblColTitleTwo.Content} - {btnCatTwoFive.Content}");
+        QuestionWindow.Show(_questions[9], $"{ColTitleTwo.Content} - {CatTwoFive.Content}", this);
+        CatTwoFive.IsEnabled = false;
     }
 
 #endregion
@@ -184,29 +210,34 @@ public partial class MainWindow : Window
 
 #region Category Three
 
-    public void btnCatThreeOne_Click (object sender, EventArgs e)
+    private void CatThreeOne_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[10], $"{lblColTitleThree.Content} - {btnCatThreeOne.Content}");
+        QuestionWindow.Show(_questions[10], $"{ColTitleThree.Content} - {CatThreeOne.Content}", this);
+        CatThreeOne.IsEnabled = false;
     }
 
-    public void btnCatThreeTwo_Click (object sender, EventArgs e)
+    private void CatThreeTwo_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[11], $"{lblColTitleThree.Content} - {btnCatThreeTwo.Content}");
+        QuestionWindow.Show(_questions[11], $"{ColTitleThree.Content} - {CatThreeTwo.Content}", this);
+        CatThreeTwo.IsEnabled = false;
     }
 
-    public void btnCatThreeThree_Click (object sender, EventArgs e)
+    private void CatThreeThree_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[12], $"{lblColTitleThree.Content} - {btnCatThreeThree.Content}");
+        QuestionWindow.Show(_questions[12], $"{ColTitleThree.Content} - {CatThreeThree.Content}", this);
+        CatThreeThree.IsEnabled = false;
     }
 
-    public void btnCatThreeFour_Click (object sender, EventArgs e)
+    private void CatThreeFour_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[13], $"{lblColTitleThree.Content} - {btnCatThreeFour.Content}");
+        QuestionWindow.Show(_questions[13], $"{ColTitleThree.Content} - {CatThreeFour.Content}", this);
+        CatThreeFour.IsEnabled = false;
     }
 
-    public void btnCatThreeFive_Click (object sender, EventArgs e)
+    private void CatThreeFive_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[14], $"{lblColTitleThree.Content} - {btnCatThreeFive.Content}");
+        QuestionWindow.Show(_questions[14], $"{ColTitleThree.Content} - {CatThreeFive.Content}", this);
+        CatThreeFive.IsEnabled = false;
     }
 
 #endregion
@@ -214,29 +245,34 @@ public partial class MainWindow : Window
 
 #region Category Four
 
-    public void btnCatFourOne_Click (object sender, EventArgs e)
+    private void CatFourOne_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[15], $"{lblColTitleFour.Content} - {btnCatFourOne.Content}");
+        QuestionWindow.Show(_questions[15], $"{ColTitleFour.Content} - {CatFourOne.Content}", this);
+        CatFourOne.IsEnabled = false;
     }
 
-    public void btnCatFourTwo_Click (object sender, EventArgs e)
+    private void CatFourTwo_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[16], $"{lblColTitleFour.Content} - {btnCatFourTwo.Content}");
+        QuestionWindow.Show(_questions[16], $"{ColTitleFour.Content} - {CatFourTwo.Content}", this);
+        CatFourTwo.IsEnabled = false;
     }
 
-    public void btnCatFourThree_Click (object sender, EventArgs e)
+    private void CatFourThree_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[17], $"{lblColTitleFour.Content} - {btnCatFourThree.Content}");
+        QuestionWindow.Show(_questions[17], $"{ColTitleFour.Content} - {CatFourThree.Content}", this);
+        CatFourThree.IsEnabled = false;
     }
 
-    public void btnCatFourFour_Click (object sender, EventArgs e)
+    private void CatFourFour_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[18], $"{lblColTitleFour.Content} - {btnCatFourFour.Content}");
+        QuestionWindow.Show(_questions[18], $"{ColTitleFour.Content} - {CatFourFour.Content}", this);
+        CatFourFour.IsEnabled = false;
     }
 
-    public void btnCatFourFive_Click (object sender, EventArgs e)
+    private void CatFourFive_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[19], $"{lblColTitleFour.Content} - {btnCatFourFive.Content}");
+        QuestionWindow.Show(_questions[19], $"{ColTitleFour.Content} - {CatFourFive.Content}", this);
+        CatFourFive.IsEnabled = false;
     }
 
 #endregion
@@ -244,29 +280,34 @@ public partial class MainWindow : Window
 
 #region Category Five
 
-    public void btnCatFiveOne_Click (object sender, EventArgs e)
+    private void CatFiveOne_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[20], $"{lblColTitleFive.Content} - {btnCatFiveOne.Content}");
+        QuestionWindow.Show(_questions[20], $"{ColTitleFive.Content} - {CatFiveOne.Content}", this);
+        CatFiveOne.IsEnabled = false;
     }
 
-    public void btnCatFiveTwo_Click (object sender, EventArgs e)
+    private void CatFiveTwo_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[21], $"{lblColTitleFive.Content} - {btnCatFiveTwo.Content}");
+        QuestionWindow.Show(_questions[21], $"{ColTitleFive.Content} - {CatFiveTwo.Content}", this);
+        CatFiveTwo.IsEnabled = false;
     }
 
-    public void btnCatFiveThree_Click (object sender, EventArgs e)
+    private void CatFiveThree_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[22], $"{lblColTitleFive.Content} - {btnCatFiveThree.Content}");
+        QuestionWindow.Show(_questions[22], $"{ColTitleFive.Content} - {CatFiveThree.Content}", this);
+        CatFiveThree.IsEnabled = false;
     }
 
-    public void btnCatFiveFour_Click (object sender, EventArgs e)
+    private void CatFiveFour_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[23], $"{lblColTitleFive.Content} - {btnCatFiveFour.Content}");
+        QuestionWindow.Show(_questions[23], $"{ColTitleFive.Content} - {CatFiveFour.Content}", this);
+        CatFiveFour.IsEnabled = false;
     }
 
-    public void btnCatFiveFive_Click (object sender, EventArgs e)
+    private void CatFiveFive_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[24], $"{lblColTitleFive.Content} - {btnCatFiveFive.Content}");
+        QuestionWindow.Show(_questions[24], $"{ColTitleFive.Content} - {CatFiveFive.Content}", this);
+        CatFiveFive.IsEnabled = false;
     }
 
 #endregion
@@ -274,29 +315,34 @@ public partial class MainWindow : Window
 
 #region Category Six
 
-    public void btnCatSixOne_Click (object sender, EventArgs e)
+    private void CatSixOne_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[25], $"{lblColTitleSix.Content} - {btnCatSixOne.Content}");
+        QuestionWindow.Show(_questions[25], $"{ColTitleSix.Content} - {CatSixOne.Content}", this);
+        CatSixOne.IsEnabled = false;
     }
 
-    public void btnCatSixTwo_Click (object sender, EventArgs e)
+    private void CatSixTwo_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[26], $"{lblColTitleSix.Content} - {btnCatSixTwo.Content}");
+        QuestionWindow.Show(_questions[26], $"{ColTitleSix.Content} - {CatSixTwo.Content}", this);
+        CatSixTwo.IsEnabled = false;
     }
 
-    public void btnCatSixThree_Click (object sender, EventArgs e)
+    private void CatSixThree_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[27], $"{lblColTitleSix.Content} - {btnCatSixThree.Content}");
+        QuestionWindow.Show(_questions[27], $"{ColTitleSix.Content} - {CatSixThree.Content}", this);
+        CatSixThree.IsEnabled = false;
     }
 
-    public void btnCatSixFour_Click (object sender, EventArgs e)
+    private void CatSixFour_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[28], $"{lblColTitleSix.Content} - {btnCatSixFour.Content}");
+        QuestionWindow.Show(_questions[28], $"{ColTitleSix.Content} - {CatSixFour.Content}", this);
+        CatSixFour.IsEnabled = false;
     }
 
-    public void btnCatSixFive_Click (object sender, EventArgs e)
+    private void CatSixFive_Click (object sender, EventArgs e)
     {
-        QuestionWindow.Show(_questions[29], $"{lblColTitleSix.Content} - {btnCatSixFive.Content}");
+        QuestionWindow.Show(_questions[29], $"{ColTitleSix.Content} - {CatSixFive.Content}", this);
+        CatSixFive.IsEnabled = false;
     }
 
 #endregion

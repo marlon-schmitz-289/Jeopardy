@@ -15,7 +15,7 @@ public partial class QuestionWindow : Window
     {
         InitializeComponent();
         _questionType = question.QuType;
-        _question = isAnswer ? question.Questi : question.Answer;
+        _question = !isAnswer ? question.Questi : question.Answer;
         Title = title;
 
         Init();
@@ -32,10 +32,10 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Collapsed;
                 Image.Visibility = Visibility.Collapsed;
 
-                Text.Content = _questionType;
-
+                Text.Content = _question;
                 Width = 300;
-                Height = 90;
+                Height = 150;
+
                 break;
             }
             case QuestionType.Audio:
@@ -61,7 +61,6 @@ public partial class QuestionWindow : Window
                 Width = Image.Source.Width   + 20;
                 Height = Image.Source.Height + 20;
                 break;
-
             }
         }
 
@@ -91,13 +90,29 @@ public partial class QuestionWindow : Window
     }
 
 
-    public static void Show (Question question, string title)
+    public static void Show (Question question, string title, Window owner)
     {
-        var window = new QuestionWindow(question, title);
+        var window = new QuestionWindow(question, title)
+        {
+            Owner = owner
+        };
         window.ShowDialog();
         window._mediaPlayer.Close();
 
-        window = new QuestionWindow(question, title, true);
+        window = new QuestionWindow(question, title, true)
+        {
+            Owner = owner
+        };
+        window.ShowDialog();
+        window._mediaPlayer.Close();
+    }
+
+    public static void ShowMessage (string message, string title, Window owner)
+    {
+        var window = new QuestionWindow(new Question(message, message), title, true)
+        {
+            Owner = owner
+        };
         window.ShowDialog();
         window._mediaPlayer.Close();
     }

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using BoardJeopardy;
 
 namespace PunktestandJeopardy;
 
@@ -17,11 +18,11 @@ public partial class MainWindow : Window
 
     private void InitializeUsers (IEnumerable<string> usernames)
     {
-        var users = UserSelection.Show(usernames.ToList());
+        var users = UserSelection.Show(usernames.ToList(), this);
 
         if (users.Count < 2)
         {
-            MessageBox.Show("Please select at least 2 users");
+            QuestionWindow.ShowMessage("Please select at least 2 users", "Error", this);
             Close();
             return;
         }

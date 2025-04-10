@@ -37,9 +37,12 @@ public partial class UserSelection : Window
     }
 
 
-    public static List<string> Show (List<string> usernames)
+    public static List<string> Show (List<string> usernames, Window owner)
     {
-        var window = new UserSelection(usernames);
+        var window = new UserSelection(usernames)
+        {
+            Owner = owner
+        };
         window.ShowDialog();
         return window._selectedUsers;
     }

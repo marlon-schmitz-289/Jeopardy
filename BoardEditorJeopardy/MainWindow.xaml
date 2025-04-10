@@ -8,13 +8,87 @@
         Title=""
         Height="680"
         Width="900">
-    <Viewbox>
-        <Grid Height="450"
-              Width="600">
+    <Window.Resources>
+        <FontFamily x:Key="CoolFont"> pack://application:,,,/font.ttf#JetBrains Mono </FontFamily>
+
+        <Style x:Key="CoolButton"
+               TargetType="Button">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource CoolFont}" />
+
+            <Setter Property="FontSize"
+                    Value="20" />
+
+            <Setter Property="Background"
+                    Value="White" />
+
+            <Setter Property="Foreground"
+                    Value="Black" />
+
+            <Setter Property="BorderThickness"
+                    Value="0" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid"
+                              Background="{TemplateBinding Background}"
+                              Width="{TemplateBinding Width}"
+                              Height="{TemplateBinding Height}">
+                            <Label Content="{TemplateBinding Content}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalContentAlignment="Center"
+                                   HorizontalContentAlignment="Center" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="RootGrid"
+                                        Property="Background"
+                                        Value="LightBlue" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter TargetName="RootGrid"
+                                        Property="Background"
+                                        Value="DeepSkyBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CoolButtonMain"
+               TargetType="Button"
+               BasedOn="{StaticResource CoolButton}">
+            <Setter Property="Background"
+                    Value="Azure" />
+        </Style>
+    </Window.Resources>
+
+    <Viewbox Stretch="Fill">
+        <Grid Height="600"
+              Width="900">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <GradientStop Color="White"
+                                  Offset="0" />
+                    <GradientStop Color="#FFFF86BD"
+                                  Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="50" />
                 <RowDefinition />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="50" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -37,50 +111,44 @@
                 <Button Grid.Column="0"
                         Content="Category 1"
                         Margin="5"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Name="lblColTitleOne"
-                        Click="LblColTitleOne_OnClick" />
+                        Style="{StaticResource CoolButton}"
+                        Name="ColTitleOne"
+                        Click="ColTitleOne_OnClick" />
 
                 <Button Grid.Column="1"
                         Content="Category 2"
                         Margin="5"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Name="lblColTitleTwo"
-                        Click="LblColTitleTwo_OnClick" />
+                        Style="{StaticResource CoolButton}"
+                        Name="ColTitleTwo"
+                        Click="ColTitleTwo_OnClick" />
 
                 <Button Grid.Column="2"
                         Content="Category 3"
                         Margin="5"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Name="lblColTitleThree"
-                        Click="LblColTitleThree_OnClick" />
+                        Style="{StaticResource CoolButton}"
+                        Name="ColTitleThree"
+                        Click="ColTitleThree_OnClick" />
 
                 <Button Grid.Column="3"
                         Content="Category 4"
                         Margin="5"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Name="lblColTitleFour"
-                        Click="LblColTitleFour_OnClick" />
+                        Style="{StaticResource CoolButton}"
+                        Name="ColTitleFour"
+                        Click="ColTitleFour_OnClick" />
 
                 <Button Grid.Column="4"
                         Content="Category 5"
                         Margin="5"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Name="lblColTitleFive"
-                        Click="LblColTitleFive_OnClick" />
+                        Style="{StaticResource CoolButton}"
+                        Name="ColTitleFive"
+                        Click="ColTitleFive_OnClick" />
 
                 <Button Grid.Column="5"
                         Content="Category 6"
                         Margin="5"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Name="lblColTitleSix"
-                        Click="LblColTitleSix_OnClick" />
+                        Style="{StaticResource CoolButton}"
+                        Name="ColTitleSix"
+                        Click="ColTitleSix_OnClick" />
             </Grid>
 
             <Grid Grid.Row="1"
@@ -107,211 +175,241 @@
                         Content="200"
                         Grid.Column="0"
                         Margin="5"
-                        Name="btnCatOneOne"
-                        Click="btnCatOneOne_Click" />
+                        Name="CatOneOne"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatOneOne_Click" />
 
                 <Button Grid.Row="1"
                         Content="400"
                         Grid.Column="0"
                         Margin="5"
-                        Name="btnCatOneTwo"
+                        Name="CatOneTwo"
+                        Style="{StaticResource CoolButton}"
                         Click="btnCatOneTwo_Click" />
 
                 <Button Grid.Row="2"
                         Content="600"
                         Grid.Column="0"
                         Margin="5"
-                        Name="btnCatOneThree"
-                        Click="btnCatOneThree_Click" />
+                        Name="CatOneThree"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatOneThree_Click" />
 
                 <Button Grid.Row="3"
                         Content="800"
                         Grid.Column="0"
                         Margin="5"
-                        Name="btnCatOneFour"
-                        Click="btnCatOneFour_Click" />
+                        Name="CatOneFour"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatOneFour_Click" />
 
                 <Button Grid.Row="4"
                         Content="1000"
                         Grid.Column="0"
                         Margin="5"
-                        Name="btnCatOneFive"
-                        Click="btnCatOneFive_Click" />
+                        Name="CatOneFive"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatOneFive_Click" />
 
                 <Button Grid.Row="0"
                         Content="200"
                         Grid.Column="1"
                         Margin="5"
-                        Name="btnCatTwoOne"
-                        Click="btnCatTwoOne_Click" />
+                        Name="CatTwoOne"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatTwoOne_Click" />
 
                 <Button Grid.Row="1"
                         Content="400"
                         Grid.Column="1"
                         Margin="5"
-                        Name="btnCatTwoTwo"
-                        Click="btnCatTwoTwo_Click" />
+                        Name="CatTwoTwo"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatTwoTwo_Click" />
 
                 <Button Grid.Row="2"
                         Content="600"
                         Grid.Column="1"
                         Margin="5"
-                        Name="btnCatTwoThree"
-                        Click="btnCatTwoThree_Click" />
+                        Name="CatTwoThree"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatTwoThree_Click" />
 
                 <Button Grid.Row="3"
                         Content="800"
                         Grid.Column="1"
                         Margin="5"
-                        Name="btnCatTwoFour"
-                        Click="btnCatTwoFour_Click" />
+                        Name="CatTwoFour"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatTwoFour_Click" />
 
                 <Button Grid.Row="4"
                         Content="1000"
                         Grid.Column="1"
                         Margin="5"
-                        Name="btnCatTwoFive"
-                        Click="btnCatTwoFive_Click" />
+                        Name="CatTwoFive"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatTwoFive_Click" />
 
                 <Button Grid.Row="0"
                         Content="200"
                         Grid.Column="2"
                         Margin="5"
-                        Name="btnCatThreeOne"
-                        Click="btnCatThreeOne_Click" />
+                        Name="CatThreeOne"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatThreeOne_Click" />
 
                 <Button Grid.Row="1"
                         Content="400"
                         Grid.Column="2"
                         Margin="5"
-                        Name="btnCatThreeTwo"
-                        Click="btnCatThreeTwo_Click" />
+                        Name="CatThreeTwo"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatThreeTwo_Click" />
 
                 <Button Grid.Row="2"
                         Content="600"
                         Grid.Column="2"
                         Margin="5"
-                        Name="btnCatThreeThree"
-                        Click="btnCatThreeThree_Click" />
+                        Name="CatThreeThree"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatThreeThree_Click" />
 
                 <Button Grid.Row="3"
                         Content="800"
                         Grid.Column="2"
                         Margin="5"
-                        Name="btnCatThreeFour"
-                        Click="btnCatThreeFour_Click" />
+                        Name="CatThreeFour"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatThreeFour_Click" />
 
                 <Button Grid.Row="4"
                         Content="1000"
                         Grid.Column="2"
                         Margin="5"
-                        Name="btnCatThreeFive"
-                        Click="btnCatThreeFive_Click" />
+                        Name="CatThreeFive"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatThreeFive_Click" />
 
                 <Button Grid.Row="0"
                         Content="200"
                         Grid.Column="3"
                         Margin="5"
-                        Name="btnCatFourOne"
-                        Click="btnCatFourOne_Click" />
+                        Name="CatFourOne"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFourOne_Click" />
 
                 <Button Grid.Row="1"
                         Content="400"
                         Grid.Column="3"
                         Margin="5"
-                        Name="btnCatFourTwo"
-                        Click="btnCatFourTwo_Click" />
+                        Name="CatFourTwo"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFourTwo_Click" />
 
                 <Button Grid.Row="2"
                         Content="600"
                         Grid.Column="3"
                         Margin="5"
-                        Name="btnCatFourThree"
-                        Click="btnCatFourThree_Click" />
+                        Name="CatFourThree"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFourThree_Click" />
 
                 <Button Grid.Row="3"
                         Content="800"
                         Grid.Column="3"
                         Margin="5"
-                        Name="btnCatFourFour"
-                        Click="btnCatFourFour_Click" />
+                        Name="CatFourFour"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFourFour_Click" />
 
                 <Button Grid.Row="4"
                         Content="1000"
                         Grid.Column="3"
                         Margin="5"
-                        Name="btnCatFourFive"
-                        Click="btnCatFourFive_Click" />
+                        Name="CatFourFive"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFourFive_Click" />
 
                 <Button Grid.Row="0"
                         Content="200"
                         Grid.Column="4"
                         Margin="5"
-                        Name="btnCatFiveOne"
-                        Click="btnCatFiveOne_Click" />
+                        Name="CatFiveOne"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFiveOne_Click" />
 
                 <Button Grid.Row="1"
                         Content="400"
                         Grid.Column="4"
                         Margin="5"
-                        Name="btnCatFiveTwo"
-                        Click="btnCatFiveTwo_Click" />
+                        Name="CatFiveTwo"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFiveTwo_Click" />
 
                 <Button Grid.Row="2"
                         Content="600"
                         Grid.Column="4"
                         Margin="5"
-                        Name="btnCatFiveThree"
-                        Click="btnCatFiveThree_Click" />
+                        Name="CatFiveThree"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFiveThree_Click" />
 
                 <Button Grid.Row="3"
                         Content="800"
                         Grid.Column="4"
                         Margin="5"
-                        Name="btnCatFiveFour"
-                        Click="btnCatFiveFour_Click" />
+                        Name="CatFiveFour"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFiveFour_Click" />
 
                 <Button Grid.Row="4"
                         Content="1000"
                         Grid.Column="4"
                         Margin="5"
-                        Name="btnCatFiveFive"
-                        Click="btnCatFiveFive_Click" />
+                        Name="CatFiveFive"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatFiveFive_Click" />
 
                 <Button Grid.Row="0"
                         Content="200"
                         Grid.Column="5"
                         Margin="5"
-                        Name="btnCatSixOne"
-                        Click="btnCatSixOne_Click" />
+                        Name="CatSixOne"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatSixOne_Click" />
 
                 <Button Grid.Row="1"
                         Content="400"
                         Grid.Column="5"
                         Margin="5"
-                        Name="btnCatSixTwo"
-                        Click="btnCatSixTwo_Click" />
+                        Name="CatSixTwo"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatSixTwo_Click" />
 
                 <Button Grid.Row="2"
                         Content="600"
                         Grid.Column="5"
                         Margin="5"
-                        Name="btnCatSixThree"
-                        Click="btnCatSixThree_Click" />
+                        Name="CatSixThree"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatSixThree_Click" />
 
                 <Button Grid.Row="3"
                         Content="800"
                         Grid.Column="5"
                         Margin="5"
-                        Name="btnCatSixFour"
-                        Click="btnCatSixFour_Click" />
+                        Name="CatSixFour"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatSixFour_Click" />
 
                 <Button Grid.Row="4"
                         Content="1000"
                         Grid.Column="5"
                         Margin="5"
-                        Name="btnCatSixFive"
-                        Click="btnCatSixFive_Click" />
+                        Name="CatSixFive"
+                        Style="{StaticResource CoolButton}"
+                        Click="CatSixFive_Click" />
 
             </Grid>
 
@@ -319,12 +417,14 @@
                     Grid.Column="0"
                     Margin="5"
                     Content="Edit users"
+                    Style="{StaticResource CoolButtonMain}"
                     Click="EditUsers_OnClick" />
 
             <Button Grid.Row="2"
                     Grid.Column="1"
                     Margin="5"
                     Content="Save"
+                    Style="{StaticResource CoolButtonMain}"
                     Click="Save_OnClick" />
         </Grid>
     </Viewbox>

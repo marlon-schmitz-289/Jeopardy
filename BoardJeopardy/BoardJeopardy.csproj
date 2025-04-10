@@ -7,6 +7,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>jeopardy_icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,7 +16,9 @@
 
     <ItemGroup>
         <None Remove="JetBrainsMono[wght].ttf"/>
+        <None Remove="jeopardy_icon.ico"/>
         <Resource Include="font.ttf"/>
+        <Resource Include="jeopardy_icon.ico"/>
     </ItemGroup>
 
 </Project>

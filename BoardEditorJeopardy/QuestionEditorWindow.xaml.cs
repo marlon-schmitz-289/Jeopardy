@@ -36,9 +36,12 @@ public partial class QuestionEditorWindow : Window
         Close();
     }
 
-    public static Question Show (Question question, int questionIndex)
+    public static Question Show (Question question, int questionIndex, Window owner)
     {
-        var window = new QuestionEditorWindow(question, questionIndex);
+        var window = new QuestionEditorWindow(question, questionIndex)
+        {
+            Owner = owner
+        };
         window.ShowDialog();
         return window._question;
     }

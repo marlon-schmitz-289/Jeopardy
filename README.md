@@ -1,3 +1,3 @@
 # Jeopardy
-very shitty code, but it works
-btw first launch board editor or it won't work
+### very shitty code, but it works
+### btw first launch board editor or it won't work

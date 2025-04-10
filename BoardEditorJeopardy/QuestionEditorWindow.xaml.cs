@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using BoardJeopardy;
 using Microsoft.Win32;
 
@@ -11,10 +10,10 @@ public partial class QuestionEditorWindow : Window
 {
     private static readonly string _FOLDER_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CoolJeopardy");
 
-    private Question _question;
-    private int _questionIndex;
+    private readonly Question _question;
+    private readonly int _questionIndex;
 
-    private QuestionEditorWindow(Question question, int questionIndex)
+    private QuestionEditorWindow (Question question, int questionIndex)
     {
         InitializeComponent();
 
@@ -28,7 +27,7 @@ public partial class QuestionEditorWindow : Window
         Answer.Text = _question.Answer;
     }
 
-    private void Save_Click(object sender, RoutedEventArgs e)
+    private void Save_Click (object sender, RoutedEventArgs e)
     {
         _question.QuType = (QuestionType)QuestionType.SelectedItem;
         _question.Questi = Question.Text;
@@ -37,14 +36,14 @@ public partial class QuestionEditorWindow : Window
         Close();
     }
 
-    public static Question Show(Question question, int questionIndex)
+    public static Question Show (Question question, int questionIndex)
     {
         var window = new QuestionEditorWindow(question, questionIndex);
         window.ShowDialog();
         return window._question;
     }
 
-    private void FileSelect_Click(object sender, RoutedEventArgs e)
+    private void FileSelect_Click (object sender, RoutedEventArgs e)
     {
         var fileType = _question.QuType switch
         {
@@ -58,7 +57,7 @@ public partial class QuestionEditorWindow : Window
             Title = "Select a file",
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
-        
+
         if (fileDialog.ShowDialog() is not true)
         {
             return;
@@ -66,9 +65,9 @@ public partial class QuestionEditorWindow : Window
 
         var fileName = Path.Combine(Path.GetDirectoryName(fileDialog.FileName), fileDialog.FileName);
         var filePath = Path.Combine(_FOLDER_PATH, $"{_questionIndex}.{fileDialog.FileName.Split('.').Last()}");
-        
+
         Question.Text = filePath;
-        
+
         if (File.Exists(filePath))
         {
             File.Copy(fileName, filePath, true);
@@ -78,7 +77,7 @@ public partial class QuestionEditorWindow : Window
         File.Copy(fileName, filePath);
     }
 
-    private void QuestionType_Changed(object sender, SelectionChangedEventArgs e)
+    private void QuestionType_Changed (object sender, SelectionChangedEventArgs e)
     {
         _question.QuType = (QuestionType)QuestionType.SelectedItem;
         if (_question.QuType is BoardJeopardy.QuestionType.Image or BoardJeopardy.QuestionType.Audio)

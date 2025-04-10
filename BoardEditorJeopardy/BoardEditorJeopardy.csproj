@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BoardJeopardy\BoardJeopardy.csproj" />
+        <ProjectReference Include="..\BoardJeopardy\BoardJeopardy.csproj"/>
     </ItemGroup>
 
 </Project>

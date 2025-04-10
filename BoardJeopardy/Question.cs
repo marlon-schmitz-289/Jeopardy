@@ -9,9 +9,6 @@ public enum QuestionType
 
 public class Question
 {
-    public string Questi { get; set; }
-    public string Answer { get; set; }
-    public QuestionType QuType { get; set; }
 
 
     public Question (string question, string answer, QuestionType type = QuestionType.Text)
@@ -20,4 +17,7 @@ public class Question
         Answer = answer;
         QuType = type;
     }
+    public string Questi { get; set; }
+    public string Answer { get; set; }
+    public QuestionType QuType { get; set; }
 }

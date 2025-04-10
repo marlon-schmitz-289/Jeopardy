@@ -32,7 +32,7 @@
                   Grid.Column="1"
                   Margin="5"
                   x:Name="QuestionType"
-                  SelectionChanged="QuestionType_Changed"/>
+                  SelectionChanged="QuestionType_Changed" />
 
         <TextBlock Grid.Row="1"
                    Grid.Column="0"

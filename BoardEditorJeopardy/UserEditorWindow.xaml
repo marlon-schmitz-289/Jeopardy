@@ -6,39 +6,119 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title=""
-        Height="200"
-        Width="250">
+        Height="300"
+        Width="400">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="CoolFont"> pack://application:,,,/font.ttf#JetBrains Mono </FontFamily>
+            
+            <Style x:Key="CoolButton"
+                   TargetType="Button">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource CoolFont}" />
+
+                <Setter Property="FontSize"
+                        Value="20" />
+
+                <Setter Property="Background"
+                        Value="Azure" />
+
+                <Setter Property="Foreground"
+                        Value="Black" />
+
+                <Setter Property="BorderThickness"
+                        Value="0" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="RootGrid"
+                                  Background="{TemplateBinding Background}">
+                                <Label Content="{TemplateBinding Content}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       VerticalContentAlignment="Center"
+                                       HorizontalContentAlignment="Center" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter TargetName="RootGrid"
+                                            Property="Background"
+                                            Value="LightBlue" />
+                                </Trigger>
+
+                                <Trigger Property="IsPressed"
+                                         Value="True">
+                                    <Setter TargetName="RootGrid"
+                                            Property="Background"
+                                            Value="DeepSkyBlue" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CoolListView"
+                   TargetType="ListView">
+                <Setter Property="Background"
+                        Value="Transparent" />
+
+                <Setter Property="FontFamily"
+                        Value="{StaticResource CoolFont}" />
+
+                <Setter Property="FontSize"
+                        Value="20" />
+
+                <Setter Property="Foreground"
+                        Value="Black" />
+
+                <Setter Property="BorderBrush"
+                        Value="Transparent" />
+
+                <Setter Property="BorderThickness"
+                        Value="0" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
-            <RowDefinition MinHeight="35" />
-            <RowDefinition MinHeight="35" />
+            <RowDefinition MinHeight="50" />
+            <RowDefinition MinHeight="50" />
         </Grid.RowDefinitions>
 
         <ListView Grid.Row="0"
                   x:Name="Users"
+                  Style="{StaticResource CoolListView}"
                   Margin="5" />
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             <Button Click="AddUser_Click"
                     Grid.Column="0"
                     Content="+"
+                    Style="{StaticResource CoolButton}"
                     Margin="5" />
 
             <Button Click="RemoveUser_Click"
                     Grid.Column="1"
                     Content="-"
+                    Style="{StaticResource CoolButton}"
                     Margin="5" />
         </Grid>
 
         <Button Grid.Row="2"
                 Margin="5"
                 Content="Save"
+                Style="{StaticResource CoolButton}"
                 Click="SaveButton_Click" />
     </Grid>
 </Window>

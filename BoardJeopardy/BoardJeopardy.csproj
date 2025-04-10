@@ -14,8 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="JetBrainsMono[wght].ttf" />
-      <Resource Include="font.ttf" />
+        <None Remove="JetBrainsMono[wght].ttf"/>
+        <Resource Include="font.ttf"/>
     </ItemGroup>
 
 </Project>

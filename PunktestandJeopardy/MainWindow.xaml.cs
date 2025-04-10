@@ -6,16 +6,16 @@ namespace PunktestandJeopardy;
 
 public partial class MainWindow : Window
 {
-    private List<string> _usernames;
-    
-    public MainWindow(IEnumerable<string> usernames)
+    private readonly List<string> _usernames;
+
+    public MainWindow (IEnumerable<string> usernames)
     {
         InitializeComponent();
         _usernames = usernames.ToList();
     }
 
 
-    private void InitializeUsers(IEnumerable<string> usernames)
+    private void InitializeUsers (IEnumerable<string> usernames)
     {
         var users = UserSelection.Show(usernames.ToList());
 
@@ -45,12 +45,12 @@ public partial class MainWindow : Window
     }
 
 
-    private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void Label_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
     {
         if (sender is not Label
-        {
-            Content: string s
-        } l)
+            {
+                Content: string s
+            } l)
         {
             return;
         }
@@ -65,12 +65,12 @@ public partial class MainWindow : Window
     }
 
 
-    private void Label_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    private void Label_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
     {
         if (sender is not Label
-        {
-            Content: string s
-        } l)
+            {
+                Content: string s
+            } l)
         {
             return;
         }
@@ -84,7 +84,7 @@ public partial class MainWindow : Window
         l.Content = i.ToString();
     }
 
-    private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+    private void MainWindow_OnLoaded (object sender, RoutedEventArgs e)
     {
         InitializeUsers(_usernames);
     }

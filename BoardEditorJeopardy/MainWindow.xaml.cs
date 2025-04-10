@@ -9,8 +9,6 @@ namespace BoardEditorJeopardy;
 /// </summary>
 public partial class MainWindow : Window
 {
-
-
 #region Constructor
 
     public MainWindow()
@@ -47,10 +45,12 @@ public partial class MainWindow : Window
 
     private void EditUsers_OnClick (object sender, RoutedEventArgs e)
     {
-        _users = UserEditorWindow.ShowDialog(_users);
+        _users = UserEditorWindow.ShowDialog(_users, this);
     }
 
 #endregion
+
+
 #region Fields
 
     private static readonly string _FOLDER_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CoolJeopardy");
@@ -70,33 +70,33 @@ public partial class MainWindow : Window
 
     private void LblColTitleOne_OnClick (object sender, RoutedEventArgs e)
     {
-        _categories[0] = CategoryEditorWindow.Show(_categories[0]);
+        _categories[0] = CategoryEditorWindow.Show(_categories[0], this);
         SetCategories();
     }
 
-    public void btnCatOneOne_Click (object sender, EventArgs e)
+    private void btnCatOneOne_Click (object sender, EventArgs e)
     {
-        _questions[0] = QuestionEditorWindow.Show(_questions[0], 0);
+        _questions[0] = QuestionEditorWindow.Show(_questions[0], 0, this);
     }
 
-    public void btnCatOneTwo_Click (object sender, EventArgs e)
+    private void btnCatOneTwo_Click (object sender, EventArgs e)
     {
-        _questions[1] = QuestionEditorWindow.Show(_questions[1], 1);
+        _questions[1] = QuestionEditorWindow.Show(_questions[1], 1, this);
     }
 
-    public void btnCatOneThree_Click (object sender, EventArgs e)
+    private void btnCatOneThree_Click (object sender, EventArgs e)
     {
-        _questions[2] = QuestionEditorWindow.Show(_questions[2], 2);
+        _questions[2] = QuestionEditorWindow.Show(_questions[2], 2, this);
     }
 
-    public void btnCatOneFour_Click (object sender, EventArgs e)
+    private void btnCatOneFour_Click (object sender, EventArgs e)
     {
-        _questions[3] = QuestionEditorWindow.Show(_questions[3], 3);
+        _questions[3] = QuestionEditorWindow.Show(_questions[3], 3, this);
     }
 
-    public void btnCatOneFive_Click (object sender, EventArgs e)
+    private void btnCatOneFive_Click (object sender, EventArgs e)
     {
-        _questions[4] = QuestionEditorWindow.Show(_questions[4], 4);
+        _questions[4] = QuestionEditorWindow.Show(_questions[4], 4, this);
     }
 
 #endregion
@@ -106,33 +106,33 @@ public partial class MainWindow : Window
 
     private void LblColTitleTwo_OnClick (object sender, RoutedEventArgs e)
     {
-        _categories[1] = CategoryEditorWindow.Show(_categories[1]);
+        _categories[1] = CategoryEditorWindow.Show(_categories[1], this);
         SetCategories();
     }
 
-    public void btnCatTwoOne_Click (object sender, EventArgs e)
+    private void btnCatTwoOne_Click (object sender, EventArgs e)
     {
-        _questions[5] = QuestionEditorWindow.Show(_questions[5], 5);
+        _questions[5] = QuestionEditorWindow.Show(_questions[5], 5, this);
     }
 
-    public void btnCatTwoTwo_Click (object sender, EventArgs e)
+    private void btnCatTwoTwo_Click (object sender, EventArgs e)
     {
-        _questions[6] = QuestionEditorWindow.Show(_questions[6], 6);
+        _questions[6] = QuestionEditorWindow.Show(_questions[6], 6, this);
     }
 
-    public void btnCatTwoThree_Click (object sender, EventArgs e)
+    private void btnCatTwoThree_Click (object sender, EventArgs e)
     {
-        _questions[7] = QuestionEditorWindow.Show(_questions[7], 7);
+        _questions[7] = QuestionEditorWindow.Show(_questions[7], 7, this);
     }
 
-    public void btnCatTwoFour_Click (object sender, EventArgs e)
+    private void btnCatTwoFour_Click (object sender, EventArgs e)
     {
-        _questions[8] = QuestionEditorWindow.Show(_questions[8], 8);
+        _questions[8] = QuestionEditorWindow.Show(_questions[8], 8, this);
     }
 
-    public void btnCatTwoFive_Click (object sender, EventArgs e)
+    private void btnCatTwoFive_Click (object sender, EventArgs e)
     {
-        _questions[9] = QuestionEditorWindow.Show(_questions[9], 9);
+        _questions[9] = QuestionEditorWindow.Show(_questions[9], 9, this);
     }
 
 #endregion
@@ -142,33 +142,33 @@ public partial class MainWindow : Window
 
     private void LblColTitleThree_OnClick (object sender, RoutedEventArgs e)
     {
-        _categories[2] = CategoryEditorWindow.Show(_categories[2]);
+        _categories[2] = CategoryEditorWindow.Show(_categories[2], this);
         SetCategories();
     }
 
-    public void btnCatThreeOne_Click (object sender, EventArgs e)
+    private void btnCatThreeOne_Click (object sender, EventArgs e)
     {
-        _questions[10] = QuestionEditorWindow.Show(_questions[10], 10);
+        _questions[10] = QuestionEditorWindow.Show(_questions[10], 10, this);
     }
 
-    public void btnCatThreeTwo_Click (object sender, EventArgs e)
+    private void btnCatThreeTwo_Click (object sender, EventArgs e)
     {
-        _questions[11] = QuestionEditorWindow.Show(_questions[11], 11);
+        _questions[11] = QuestionEditorWindow.Show(_questions[11], 11, this);
     }
 
-    public void btnCatThreeThree_Click (object sender, EventArgs e)
+    private void btnCatThreeThree_Click (object sender, EventArgs e)
     {
-        _questions[12] = QuestionEditorWindow.Show(_questions[12], 12);
+        _questions[12] = QuestionEditorWindow.Show(_questions[12], 12, this);
     }
 
-    public void btnCatThreeFour_Click (object sender, EventArgs e)
+    private void btnCatThreeFour_Click (object sender, EventArgs e)
     {
-        _questions[13] = QuestionEditorWindow.Show(_questions[13], 13);
+        _questions[13] = QuestionEditorWindow.Show(_questions[13], 13, this);
     }
 
-    public void btnCatThreeFive_Click (object sender, EventArgs e)
+    private void btnCatThreeFive_Click (object sender, EventArgs e)
     {
-        _questions[14] = QuestionEditorWindow.Show(_questions[14], 14);
+        _questions[14] = QuestionEditorWindow.Show(_questions[14], 14, this);
     }
 
 #endregion
@@ -178,33 +178,33 @@ public partial class MainWindow : Window
 
     private void LblColTitleFour_OnClick (object sender, RoutedEventArgs e)
     {
-        _categories[3] = CategoryEditorWindow.Show(_categories[3]);
+        _categories[3] = CategoryEditorWindow.Show(_categories[3], this);
         SetCategories();
     }
 
-    public void btnCatFourOne_Click (object sender, EventArgs e)
+    private void btnCatFourOne_Click (object sender, EventArgs e)
     {
-        _questions[15] = QuestionEditorWindow.Show(_questions[15], 15);
+        _questions[15] = QuestionEditorWindow.Show(_questions[15], 15, this);
     }
 
-    public void btnCatFourTwo_Click (object sender, EventArgs e)
+    private void btnCatFourTwo_Click (object sender, EventArgs e)
     {
-        _questions[16] = QuestionEditorWindow.Show(_questions[16], 16);
+        _questions[16] = QuestionEditorWindow.Show(_questions[16], 16, this);
     }
 
-    public void btnCatFourThree_Click (object sender, EventArgs e)
+    private void btnCatFourThree_Click (object sender, EventArgs e)
     {
-        _questions[17] = QuestionEditorWindow.Show(_questions[17], 17);
+        _questions[17] = QuestionEditorWindow.Show(_questions[17], 17, this);
     }
 
-    public void btnCatFourFour_Click (object sender, EventArgs e)
+    private void btnCatFourFour_Click (object sender, EventArgs e)
     {
-        _questions[18] = QuestionEditorWindow.Show(_questions[18], 18);
+        _questions[18] = QuestionEditorWindow.Show(_questions[18], 18, this);
     }
 
-    public void btnCatFourFive_Click (object sender, EventArgs e)
+    private void btnCatFourFive_Click (object sender, EventArgs e)
     {
-        _questions[19] = QuestionEditorWindow.Show(_questions[19], 19);
+        _questions[19] = QuestionEditorWindow.Show(_questions[19], 19, this);
     }
 
 #endregion
@@ -214,33 +214,33 @@ public partial class MainWindow : Window
 
     private void LblColTitleFive_OnClick (object sender, RoutedEventArgs e)
     {
-        _categories[4] = CategoryEditorWindow.Show(_categories[4]);
+        _categories[4] = CategoryEditorWindow.Show(_categories[4], this);
         SetCategories();
     }
 
-    public void btnCatFiveOne_Click (object sender, EventArgs e)
+    private void btnCatFiveOne_Click (object sender, EventArgs e)
     {
-        _questions[20] = QuestionEditorWindow.Show(_questions[20], 20);
+        _questions[20] = QuestionEditorWindow.Show(_questions[20], 20, this);
     }
 
-    public void btnCatFiveTwo_Click (object sender, EventArgs e)
+    private void btnCatFiveTwo_Click (object sender, EventArgs e)
     {
-        _questions[21] = QuestionEditorWindow.Show(_questions[21], 21);
+        _questions[21] = QuestionEditorWindow.Show(_questions[21], 21, this);
     }
 
-    public void btnCatFiveThree_Click (object sender, EventArgs e)
+    private void btnCatFiveThree_Click (object sender, EventArgs e)
     {
-        _questions[22] = QuestionEditorWindow.Show(_questions[22], 22);
+        _questions[22] = QuestionEditorWindow.Show(_questions[22], 22, this);
     }
 
-    public void btnCatFiveFour_Click (object sender, EventArgs e)
+    private void btnCatFiveFour_Click (object sender, EventArgs e)
     {
-        _questions[23] = QuestionEditorWindow.Show(_questions[23], 23);
+        _questions[23] = QuestionEditorWindow.Show(_questions[23], 23, this);
     }
 
-    public void btnCatFiveFive_Click (object sender, EventArgs e)
+    private void btnCatFiveFive_Click (object sender, EventArgs e)
     {
-        _questions[24] = QuestionEditorWindow.Show(_questions[24], 24);
+        _questions[24] = QuestionEditorWindow.Show(_questions[24], 24, this);
     }
 
 #endregion
@@ -250,33 +250,33 @@ public partial class MainWindow : Window
 
     private void LblColTitleSix_OnClick (object sender, RoutedEventArgs e)
     {
-        _categories[5] = CategoryEditorWindow.Show(_categories[5]);
+        _categories[5] = CategoryEditorWindow.Show(_categories[5], this);
         SetCategories();
     }
 
-    public void btnCatSixOne_Click (object sender, EventArgs e)
+    private void btnCatSixOne_Click (object sender, EventArgs e)
     {
-        _questions[25] = QuestionEditorWindow.Show(_questions[25], 25);
+        _questions[25] = QuestionEditorWindow.Show(_questions[25], 25, this);
     }
 
-    public void btnCatSixTwo_Click (object sender, EventArgs e)
+    private void btnCatSixTwo_Click (object sender, EventArgs e)
     {
-        _questions[26] = QuestionEditorWindow.Show(_questions[26], 26);
+        _questions[26] = QuestionEditorWindow.Show(_questions[26], 26, this);
     }
 
-    public void btnCatSixThree_Click (object sender, EventArgs e)
+    private void btnCatSixThree_Click (object sender, EventArgs e)
     {
-        _questions[27] = QuestionEditorWindow.Show(_questions[27], 27);
+        _questions[27] = QuestionEditorWindow.Show(_questions[27], 27, this);
     }
 
-    public void btnCatSixFour_Click (object sender, EventArgs e)
+    private void btnCatSixFour_Click (object sender, EventArgs e)
     {
-        _questions[28] = QuestionEditorWindow.Show(_questions[28], 28);
+        _questions[28] = QuestionEditorWindow.Show(_questions[28], 28, this);
     }
 
-    public void btnCatSixFive_Click (object sender, EventArgs e)
+    private void btnCatSixFive_Click (object sender, EventArgs e)
     {
-        _questions[29] = QuestionEditorWindow.Show(_questions[29], 29);
+        _questions[29] = QuestionEditorWindow.Show(_questions[29], 29, this);
     }
 
 #endregion

@@ -8,7 +8,7 @@ public partial class UserEditorWindow : Window
     private readonly List<TextBox> _usersTextBoxes = [];
 
 
-    public UserEditorWindow (List<string> users)
+    private UserEditorWindow (List<string> users)
     {
         InitializeComponent();
 
@@ -54,9 +54,12 @@ public partial class UserEditorWindow : Window
     }
 
 
-    public static List<string> ShowDialog (List<string> users)
+    public static List<string> ShowDialog (List<string> users, Window owner)
     {
-        var dialog = new UserEditorWindow(users);
+        var dialog = new UserEditorWindow(users)
+        {
+            Owner = owner
+        };
         dialog.ShowDialog();
         return dialog._users;
     }

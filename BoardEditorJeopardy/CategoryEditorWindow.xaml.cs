@@ -20,9 +20,12 @@ public partial class CategoryEditorWindow : Window
         DialogResult = true;
     }
 
-    public static string Show (string category)
+    public static string Show (string category, Window owner)
     {
-        var window = new CategoryEditorWindow(category);
+        var window = new CategoryEditorWindow(category)
+        {
+            Owner = owner
+        };
         window.ShowDialog();
         return window._category;
     }

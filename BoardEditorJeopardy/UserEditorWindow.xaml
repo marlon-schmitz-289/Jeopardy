@@ -12,7 +12,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <FontFamily x:Key="CoolFont"> pack://application:,,,/font.ttf#JetBrains Mono </FontFamily>
-            
+
             <Style x:Key="CoolButton"
                    TargetType="Button">
                 <Setter Property="FontFamily"
@@ -94,7 +94,7 @@
                               Offset="1" />
             </LinearGradientBrush>
         </Grid.Background>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
             <RowDefinition MinHeight="50" />

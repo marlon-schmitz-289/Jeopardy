@@ -85,6 +85,16 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1"
+                                 StartPoint="0.5,0">
+                <GradientStop Color="White"
+                              Offset="0" />
+                <GradientStop Color="#FFFF86BD"
+                              Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
             <RowDefinition MinHeight="50" />

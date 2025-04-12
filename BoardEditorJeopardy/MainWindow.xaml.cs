@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
-using BoardJeopardy;
+using BoardJeopardy.Model;
 
 namespace BoardEditorJeopardy;
 

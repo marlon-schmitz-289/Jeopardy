@@ -2,24 +2,38 @@
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using BoardJeopardy.Model;
 
-namespace BoardJeopardy;
+namespace PunktestandJeopardy.Viewmodel;
 
-public partial class QuestionWindow : Window
+public class QuestionWindowViewmodel : BaseViewmodel
 {
-    private readonly MediaPlayer _mediaPlayer = new();
     private readonly string _question;
     private readonly QuestionType _questionType;
 
-    private QuestionWindow (Question question, string title, bool isAnswer = false)
+    public MediaPlayer MediaPlayer { get; } = new();
+
+    public bool IsText => _questionType  == QuestionType.Text;
+    public bool IsAudio => _questionType == QuestionType.Audio;
+    public bool IsImage => _questionType == QuestionType.Image;
+
+
+    public string TextContent => _question;
+
+
+    public string StatusContent => MediaPlayer.Source != null
+        ? $@"{MediaPlayer.Position:mm\:ss} / {MediaPlayer.NaturalDuration.TimeSpan:mm\:ss}"
+        : "0:00 / 0:00";
+
+
+    public QuestionWindowViewmodel (QuestionType questionType, string question)
     {
-        InitializeComponent();
-        _questionType = question.QuType;
-        _question = !isAnswer ? question.Questi : question.Answer;
-        Title = title;
+        _questionType = questionType;
+        _question = question;
 
         Init();
     }
+
 
     private void Init()
     {
@@ -32,7 +46,6 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Collapsed;
                 Image.Visibility = Visibility.Collapsed;
 
-                Text.Content = _question;
                 Width = 300;
                 Height = 150;
 
@@ -44,7 +57,7 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Visible;
                 Image.Visibility = Visibility.Collapsed;
 
-                _mediaPlayer.Open(new Uri(_question));
+                MediaPlayer.Open(new Uri(_question));
 
                 Width = 300;
                 Height = 90;
@@ -72,48 +85,22 @@ public partial class QuestionWindow : Window
         timer.Start();
     }
 
+
     private void Timer_Tick (object? sender, EventArgs e)
     {
-        Status.Content = _mediaPlayer.Source != null
-            ? $@"{_mediaPlayer.Position:mm\:ss} / {_mediaPlayer.NaturalDuration.TimeSpan:mm\:ss}"
-            : "0:00 / 0:00";
-    }
-
-    private void Play_Click (object? sender, EventArgs e)
-    {
-        _mediaPlayer.Play();
-    }
-
-    private void Stop_Click (object sender, RoutedEventArgs e)
-    {
-        _mediaPlayer.Stop();
-    }
-
-
-    public static void Show (Question question, string title, Window owner)
-    {
-        var window = new QuestionWindow(question, title)
+        if (MediaPlayer.Source != null)
         {
-            Owner = owner
-        };
-        window.ShowDialog();
-        window._mediaPlayer.Close();
-
-        window = new QuestionWindow(question, title, true)
-        {
-            Owner = owner
-        };
-        window.ShowDialog();
-        window._mediaPlayer.Close();
+            OnPropertyChanged(nameof(StatusContent));
+        }
     }
 
-    public static void ShowMessage (string message, string title, Window owner)
+    private void Play (object? sender, EventArgs e)
     {
-        var window = new QuestionWindow(new Question(message, message), title, true)
-        {
-            Owner = owner
-        };
-        window.ShowDialog();
-        window._mediaPlayer.Close();
+        MediaPlayer.Play();
+    }
+
+    private void Stop (object sender, RoutedEventArgs e)
+    {
+        MediaPlayer.Stop();
     }
 }

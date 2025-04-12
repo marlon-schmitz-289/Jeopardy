@@ -1,4 +1,4 @@
-﻿namespace BoardJeopardy;
+﻿namespace BoardJeopardy.Model;
 
 public enum QuestionType
 {
@@ -15,8 +15,8 @@ public class Question
         Answer = answer;
         QuType = type;
     }
-    
-    
+
+
     public string Questi { get; set; }
     public string Answer { get; set; }
     public QuestionType QuType { get; set; }

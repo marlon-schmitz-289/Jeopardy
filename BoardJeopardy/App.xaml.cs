@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace BoardJeopardy;
+namespace BoardJeopardy.Model;
 
 /// <summary>
 ///     Interaction logic for App.xaml

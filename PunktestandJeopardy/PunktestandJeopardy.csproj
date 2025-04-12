@@ -6,17 +6,27 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
-        <ApplicationIcon>jeopardy_icon.ico</ApplicationIcon>
+        <ApplicationIcon>Resources\jeopardy_icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <None Remove="jeopardy_icon.ico"/>
-        <Resource Include="font.ttf"/>
-        <Resource Include="jeopardy_icon.ico"/>
+        <Resource Include="Resources\font.ttf"/>
+        <Resource Include="Resources\jeopardy_icon.ico"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Page Update="QuestionWindow.xaml">
+        <Page Update="View\MainWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="View\QuestionWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="View\UserSelection.xaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>

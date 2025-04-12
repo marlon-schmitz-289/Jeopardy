@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using BoardJeopardy;
+using BoardJeopardy.Model;
 using Microsoft.Win32;
 
 namespace BoardEditorJeopardy;
@@ -50,8 +50,8 @@ public partial class QuestionEditorWindow : Window
     {
         var fileType = _question.QuType switch
         {
-            BoardJeopardy.QuestionType.Image => "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg",
-            BoardJeopardy.QuestionType.Audio => "Audio files (*.mp3;*.wav)|*.mp3;*.wav"
+            BoardJeopardy.Model.QuestionType.Image => "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg",
+            BoardJeopardy.Model.QuestionType.Audio => "Audio files (*.mp3;*.wav)|*.mp3;*.wav"
         };
 
         var fileDialog = new OpenFileDialog
@@ -83,7 +83,7 @@ public partial class QuestionEditorWindow : Window
     private void QuestionType_Changed (object sender, SelectionChangedEventArgs e)
     {
         _question.QuType = (QuestionType)QuestionType.SelectedItem;
-        if (_question.QuType is BoardJeopardy.QuestionType.Image or BoardJeopardy.QuestionType.Audio)
+        if (_question.QuType is BoardJeopardy.Model.QuestionType.Image or BoardJeopardy.Model.QuestionType.Audio)
         {
             FileSelect.Visibility = Visibility.Visible;
             Question.Visibility = Visibility.Collapsed;

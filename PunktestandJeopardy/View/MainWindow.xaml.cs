@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BoardJeopardy;
+using BoardJeopardy.View;
 
-namespace PunktestandJeopardy;
+namespace PunktestandJeopardy.View;
 
 public partial class MainWindow : Window
 {

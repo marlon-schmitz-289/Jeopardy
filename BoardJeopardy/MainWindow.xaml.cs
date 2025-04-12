@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
+using BoardJeopardy.Model;
+using BoardJeopardy.View;
 
 namespace BoardJeopardy;
 
@@ -33,7 +35,7 @@ public partial class MainWindow : Window
 
     private void MainWindow_OnLoaded (object sender, RoutedEventArgs e)
     {
-        var pmw = new PunktestandJeopardy.MainWindow(ReadUsernames())
+        var pmw = new PunktestandJeopardy.View.MainWindow(ReadUsernames())
         {
             Owner = this,
             Title = "",

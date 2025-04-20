@@ -1,27 +1,29 @@
 ﻿using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using NAudio.Wave;
 
 namespace BoardJeopardy;
 
 public partial class QuestionWindow : Window
 {
-    private readonly MediaPlayer _mediaPlayer = new();
+
     private readonly string _question;
     private readonly QuestionType _questionType;
+    private AudioFileReader _audioFileReader;
+    private IWavePlayer _mediaPlayer;
 
     private QuestionWindow (Question question, string title, bool isAnswer = false)
     {
         InitializeComponent();
-        _questionType = question.QuType;
+        _questionType = !isAnswer ? question.QuType : QuestionType.Text;
         _question = !isAnswer ? question.Questi : question.Answer;
         Title = title;
 
-        Init();
+        Init(isAnswer);
     }
 
-    private void Init()
+    private void Init (bool isAnswer)
     {
         switch (_questionType)
         {
@@ -44,7 +46,10 @@ public partial class QuestionWindow : Window
                 Audio.Visibility = Visibility.Visible;
                 Image.Visibility = Visibility.Collapsed;
 
-                _mediaPlayer.Open(new Uri(_question));
+                _audioFileReader = new AudioFileReader(_question);
+                _mediaPlayer = new WaveOutEvent();
+                _mediaPlayer.Init(_audioFileReader);
+                _mediaPlayer.Volume = 0.5f;
 
                 Width = 300;
                 Height = 90;
@@ -74,9 +79,21 @@ public partial class QuestionWindow : Window
 
     private void Timer_Tick (object? sender, EventArgs e)
     {
-        Status.Content = _mediaPlayer.Source != null
-            ? $@"{_mediaPlayer.Position:mm\:ss} / {_mediaPlayer.NaturalDuration.TimeSpan:mm\:ss}"
-            : "0:00 / 0:00";
+        try
+        {
+            if (_audioFileReader != null && _mediaPlayer != null)
+            {
+                Status.Content = $@"{_audioFileReader.CurrentTime:mm\:ss} / {_audioFileReader.TotalTime:mm\:ss}";
+            }
+            else
+            {
+                Status.Content = "0:00 / 0:00";
+            }
+        }
+        catch
+        {
+            // ignored
+        }
     }
 
     private void Play_Click (object? sender, EventArgs e)
@@ -87,6 +104,23 @@ public partial class QuestionWindow : Window
     private void Stop_Click (object sender, RoutedEventArgs e)
     {
         _mediaPlayer.Stop();
+        _audioFileReader.CurrentTime = TimeSpan.Zero;
+    }
+
+    private void DisposeAudio()
+    {
+        if (_mediaPlayer != null)
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Dispose();
+            _mediaPlayer = null;
+        }
+
+        if (_audioFileReader != null)
+        {
+            _audioFileReader.Dispose();
+            _audioFileReader = null;
+        }
     }
 
 
@@ -97,14 +131,14 @@ public partial class QuestionWindow : Window
             Owner = owner
         };
         window.ShowDialog();
-        window._mediaPlayer.Close();
+        window.DisposeAudio();
 
         window = new QuestionWindow(question, title, true)
         {
             Owner = owner
         };
         window.ShowDialog();
-        window._mediaPlayer.Close();
+        window.DisposeAudio();
     }
 
     public static void ShowMessage (string message, string title, Window owner)
@@ -114,6 +148,6 @@ public partial class QuestionWindow : Window
             Owner = owner
         };
         window.ShowDialog();
-        window._mediaPlayer.Close();
+        window.DisposeAudio();
     }
 }

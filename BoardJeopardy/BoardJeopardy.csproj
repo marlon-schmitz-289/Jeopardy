@@ -8,6 +8,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>jeopardy_icon.ico</ApplicationIcon>
+        <Version>1.1.0</Version>
+        <AssemblyVersion>1.1</AssemblyVersion>
+        <FileVersion>1.1</FileVersion>
+        <SignAssembly>true</SignAssembly>
     </PropertyGroup>
 
     <ItemGroup>

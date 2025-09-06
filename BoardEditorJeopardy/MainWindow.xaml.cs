@@ -53,10 +53,10 @@ public partial class MainWindow : Window
 
 #region Fields
 
-    private static readonly string _FOLDER_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CoolJeopardy");
-    private static readonly string _USERNAMES_PATH = Path.Combine(_FOLDER_PATH, "users.txt");
-    private static readonly string _CATEGORIES_PATH = Path.Combine(_FOLDER_PATH, "categories.txt");
-    private static readonly string _QUESTIONS_PATH = Path.Combine(_FOLDER_PATH, "questions.txt");
+    private static readonly string FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CoolJeopardy");
+    private static readonly string UsernamesPath = Path.Combine(FolderPath, "users.txt");
+    private static readonly string CategoriesPath = Path.Combine(FolderPath, "categories.txt");
+    private static readonly string QuestionsPath = Path.Combine(FolderPath, "questions.txt");
 
     private readonly List<Question> _questions;
     private readonly List<string> _categories;
@@ -286,16 +286,16 @@ public partial class MainWindow : Window
 
     private void ReadUsernames()
     {
-        if (!File.Exists(_USERNAMES_PATH))
+        if (!File.Exists(UsernamesPath))
         {
             return;
         }
 
         _users.Clear();
-        using var sr = new StreamReader(_USERNAMES_PATH);
+        using var sr = new StreamReader(UsernamesPath);
         while (!sr.EndOfStream)
         {
-            _users.Add(sr.ReadLine());
+            _users.Add(sr.ReadLine() ?? "");
         }
 
         sr.Close();
@@ -304,16 +304,16 @@ public partial class MainWindow : Window
 
     private void ReadCategories()
     {
-        if (!File.Exists(_CATEGORIES_PATH))
+        if (!File.Exists(CategoriesPath))
         {
             return;
         }
 
         _categories.Clear();
-        using var sr = new StreamReader(_CATEGORIES_PATH);
+        using var sr = new StreamReader(CategoriesPath);
         while (!sr.EndOfStream)
         {
-            _categories.Add(sr.ReadLine());
+            _categories.Add(sr.ReadLine() ?? "");
         }
 
         sr.Close();
@@ -333,13 +333,13 @@ public partial class MainWindow : Window
 
     private void ReadQuestions()
     {
-        if (!File.Exists(_QUESTIONS_PATH))
+        if (!File.Exists(QuestionsPath))
         {
             return;
         }
 
         _questions.Clear();
-        using var sr = new StreamReader(_QUESTIONS_PATH);
+        using var sr = new StreamReader(QuestionsPath);
         while (!sr.EndOfStream)
         {
             var line = sr.ReadLine()?.Split('|');
@@ -367,9 +367,9 @@ public partial class MainWindow : Window
 
     private void Save_OnClick (object sender, RoutedEventArgs e)
     {
-        if (!Directory.Exists(_FOLDER_PATH))
+        if (!Directory.Exists(FolderPath))
         {
-            Directory.CreateDirectory(_FOLDER_PATH);
+            Directory.CreateDirectory(FolderPath);
         }
 
         SaveUsers();
@@ -382,12 +382,12 @@ public partial class MainWindow : Window
 
     private void SaveUsers()
     {
-        if (!File.Exists(_USERNAMES_PATH))
+        if (!File.Exists(UsernamesPath))
         {
-            File.Create(_USERNAMES_PATH).Close();
+            File.Create(UsernamesPath).Close();
         }
 
-        using var sw = new StreamWriter(_USERNAMES_PATH, false);
+        using var sw = new StreamWriter(UsernamesPath, false);
         foreach (var user in _users)
         {
             sw.WriteLine(user);
@@ -399,12 +399,12 @@ public partial class MainWindow : Window
 
     private void SaveCategories()
     {
-        if (!File.Exists(_CATEGORIES_PATH))
+        if (!File.Exists(CategoriesPath))
         {
-            File.Create(_CATEGORIES_PATH).Close();
+            File.Create(CategoriesPath).Close();
         }
 
-        using var sw = new StreamWriter(_CATEGORIES_PATH, false);
+        using var sw = new StreamWriter(CategoriesPath, false);
         foreach (var category in _categories)
         {
             sw.WriteLine(category);
@@ -416,12 +416,12 @@ public partial class MainWindow : Window
 
     private void SaveQuestions()
     {
-        if (!File.Exists(_QUESTIONS_PATH))
+        if (!File.Exists(QuestionsPath))
         {
-            File.Create(_QUESTIONS_PATH).Close();
+            File.Create(QuestionsPath).Close();
         }
 
-        using var sw = new StreamWriter(_QUESTIONS_PATH, false);
+        using var sw = new StreamWriter(QuestionsPath, false);
         foreach (var question in _questions)
         {
             sw.WriteLine($"{question.Questi}|{question.Answer}");

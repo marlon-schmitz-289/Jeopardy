@@ -27,7 +27,7 @@ public partial class UserSelection : Window
     {
         if (e.AddedItems.Count > 0)
         {
-            _selectedUsers.AddRange(e.AddedItems.OfType<string>().ToList());
+            _selectedUsers.AddRange([.. e.AddedItems.OfType<string>()]);
         }
 
         if (e.RemovedItems.Count > 0)

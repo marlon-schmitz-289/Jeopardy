@@ -83,7 +83,7 @@ import GameNavbar from '@/components/GameNavbar.vue'
 
 const store = useGameStore()
 
-const playersSelected = ref<boolean>(false)
+const playersSelected = ref<boolean>(store.players.length > 0)
 const showScoreboard = ref<boolean>(false)
 const showPlayerManagement = ref<boolean>(false)
 const currentQuestion = ref<QuestionSelection | null>(null)
@@ -136,13 +136,18 @@ const resetGame = (): void => {
 
 <style scoped>
 .game-view {
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .game-content {
-  padding-top: 80px; /* Space for GameNavbar */
-  min-height: 100vh;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
 .player-management-overlay {
@@ -332,7 +337,7 @@ const resetGame = (): void => {
 /* Responsive design */
 @media (max-width: 768px) {
   .game-content {
-    padding-top: 70px;
+    top: 70px;
   }
 
   .player-management-panel {
@@ -352,7 +357,7 @@ const resetGame = (): void => {
 
 @media (max-width: 640px) {
   .game-content {
-    padding-top: 60px;
+    top: 60px;
   }
 }
 </style>

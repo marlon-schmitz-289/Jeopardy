@@ -8,66 +8,72 @@
       </router-link>
     </div>
 
-    <div class="user-list">
-      <div v-for="(user, index) in users" :key="index"
-           class="user-item"
-           :class="{ selected: selectedUsers.includes(user) }">
-        <div class="user-content" @click="toggleUser(user)">
-          <span class="user-name">{{ user }}</span>
-          <span v-if="selectedUsers.includes(user)" class="selected-indicator">✓</span>
-        </div>
-        <button @click="removeUser(index)"
-                class="remove-user-btn"
-                :title="`Remove ${user}`"
-                :disabled="users.length <= 1">
-          <span class="remove-icon">×</span>
+    <!-- Controls and buttons at top -->
+    <div class="top-section">
+      <div class="controls">
+        <input v-model="newUser"
+               @keyup.enter="addUser"
+               placeholder="Add new player"
+               class="user-input" />
+        <button @click="addUser"
+                :disabled="!newUser.trim() || users.includes(newUser.trim())"
+                class="add-btn">
+          <span class="add-icon">+</span>
+          Add
         </button>
       </div>
-    </div>
 
-    <div class="controls">
-      <input v-model="newUser"
-             @keyup.enter="addUser"
-             placeholder="Add new player"
-             class="user-input" />
-      <button @click="addUser"
-              :disabled="!newUser.trim() || users.includes(newUser.trim())"
-              class="add-btn">
-        <span class="add-icon">+</span>
-        Add
-      </button>
-    </div>
-
-    <div class="selected-info">
-      <div class="selected-count">
-        Selected: {{ selectedUsers.length }}/6 players
-      </div>
-      <div v-if="selectedUsers.length > 0" class="selected-players">
-        <div class="selected-title">Playing:</div>
-        <div class="selected-list">
-          <span v-for="(player, index) in selectedUsers" :key="player" class="selected-player">
-            {{ player }}<span v-if="index < selectedUsers.length - 1">, </span>
-          </span>
+      <div class="selected-info">
+        <div class="selected-count">
+          Selected: {{ selectedUsers.length }}/6 players
+        </div>
+        <div v-if="selectedUsers.length > 0" class="selected-players">
+          <div class="selected-title">Playing:</div>
+          <div class="selected-list">
+            <span v-for="(player, index) in selectedUsers" :key="player" class="selected-player">
+              {{ player }}<span v-if="index < selectedUsers.length - 1">, </span>
+            </span>
+          </div>
         </div>
       </div>
+
+      <div class="action-buttons">
+        <button @click="confirm"
+                :disabled="selectedUsers.length === 0"
+                class="confirm-btn">
+          🎮 Start Game ({{ selectedUsers.length }} player{{ selectedUsers.length !== 1 ? 's' : '' }})
+        </button>
+
+        <button v-if="selectedUsers.length > 0"
+                @click="clearSelection"
+                class="clear-btn">
+          🗑️ Clear Selection
+        </button>
+      </div>
+
+      <div v-if="users.length <= 1" class="warning-message">
+        ⚠️ You need at least one player to start the game
+      </div>
     </div>
 
-    <div class="action-buttons">
-      <button @click="confirm"
-              :disabled="selectedUsers.length === 0"
-              class="confirm-btn">
-        🎮 Start Game ({{ selectedUsers.length }} player{{ selectedUsers.length !== 1 ? 's' : '' }})
-      </button>
-
-      <button v-if="selectedUsers.length > 0"
-              @click="clearSelection"
-              class="clear-btn">
-        🗑️ Clear Selection
-      </button>
-    </div>
-
-    <div v-if="users.length <= 1" class="warning-message">
-      ⚠️ You need at least one player to start the game
+    <!-- Scrollable player list -->
+    <div class="user-list-container">
+      <div class="user-list">
+        <div v-for="(user, index) in users" :key="index"
+             class="user-item"
+             :class="{ selected: selectedUsers.includes(user) }">
+          <div class="user-content" @click="toggleUser(user)">
+            <span class="user-name">{{ user }}</span>
+            <span v-if="selectedUsers.includes(user)" class="selected-indicator">✓</span>
+          </div>
+          <button @click="removeUser(index)"
+                  class="remove-user-btn"
+                  :title="`Remove ${user}`"
+                  :disabled="users.length <= 1">
+            <span class="remove-icon">×</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Quick Navigation Footer -->
@@ -80,7 +86,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+const USERS_STORAGE_KEY = 'jeopardy-available-users'
+
+function loadUsersFromStorage(): string[] {
+  try {
+    const stored = localStorage.getItem(USERS_STORAGE_KEY)
+    if (stored) {
+      const users = JSON.parse(stored)
+      if (Array.isArray(users) && users.every(u => typeof u === 'string') && users.length > 0) {
+        return users
+      }
+    }
+  } catch {
+    // Ignore storage errors
+  }
+  return ['Player 1', 'Player 2', 'Player 3']
+}
+
+function saveUsersToStorage(users: string[]): void {
+  try {
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
+  } catch {
+    // Ignore storage errors
+  }
+}
 
 interface Emits {
   (e: 'players-selected', players: string[]): void
@@ -88,9 +119,14 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const users = ref<string[]>(['Player 1', 'Player 2', 'Player 3'])
+const users = ref<string[]>(loadUsersFromStorage())
 const selectedUsers = ref<string[]>([])
 const newUser = ref<string>('')
+
+// Save users whenever the list changes
+watch(users, (newUsers) => {
+  saveUsersToStorage(newUsers)
+}, { deep: true })
 
 const toggleUser = (user: string): void => {
   const index = selectedUsers.value.indexOf(user)
@@ -136,20 +172,28 @@ const confirm = (): void => {
 <style scoped>
 .user-selection {
   background: linear-gradient(to bottom, white, #ff86bd);
-  padding: 30px;
+  padding: 20px;
   text-align: center;
-  min-height: 100vh;
+  height: 100vh;
   font-family: 'JetBrains Mono', monospace;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .selection-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
+  flex-shrink: 0;
+}
+
+.top-section {
+  flex-shrink: 0;
 }
 
 .selection-header h2 {
@@ -181,12 +225,20 @@ const confirm = (): void => {
   box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
 }
 
+.user-list-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 15px 0;
+  padding: 5px;
+}
+
 .user-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
   max-width: 450px;
-  margin: 0 auto 30px;
+  margin: 0 auto;
 }
 
 .user-item {
@@ -314,11 +366,10 @@ const confirm = (): void => {
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   max-width: 450px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 30px;
 }
 
 .user-input {
@@ -377,7 +428,7 @@ const confirm = (): void => {
 }
 
 .selected-info {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .selected-count {
@@ -422,9 +473,9 @@ const confirm = (): void => {
 .action-buttons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 15px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .confirm-btn {
@@ -485,19 +536,19 @@ const confirm = (): void => {
 .warning-message {
   background: linear-gradient(135deg, #fff3cd, #ffeeba);
   color: #856404;
-  padding: 15px 20px;
+  padding: 12px 16px;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   max-width: 450px;
-  margin: 0 auto 30px;
+  margin: 0 auto;
   border: 2px solid #ffc107;
   box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
 }
 
 .navigation-footer {
-  margin-top: auto;
-  padding-top: 20px;
+  flex-shrink: 0;
+  padding-top: 10px;
 }
 
 .nav-hint {

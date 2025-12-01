@@ -45,7 +45,11 @@ const selectQuestion = (categoryId: number, questionId: number): void => {
 .game-board {
   background: linear-gradient(to bottom, white, #ff86bd);
   padding: 20px;
-  min-height: 100vh;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .categories {
@@ -68,6 +72,8 @@ const selectQuestion = (categoryId: number, questionId: number): void => {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
+  flex: 1;
+  min-height: 0;
 }
 
 .category-column {

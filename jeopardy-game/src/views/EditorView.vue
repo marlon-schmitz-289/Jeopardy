@@ -171,9 +171,13 @@ const loadBoard = (): void => {
 <style scoped>
 .editor {
   background: linear-gradient(to bottom, white, #ff86bd);
-  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
   padding: 20px;
   font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  flex-direction: column;
 }
 
 .editor-header {
@@ -181,16 +185,22 @@ const loadBoard = (): void => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+  padding-left: 72px;
+  -webkit-app-region: drag;
+  cursor: default;
+  user-select: none;
 }
 
 .editor-header h1 {
   font-size: 36px;
   margin: 0;
+  -webkit-app-region: no-drag;
 }
 
 .header-controls {
   display: flex;
   gap: 10px;
+  -webkit-app-region: no-drag;
 }
 
 .categories-row {
@@ -200,10 +210,19 @@ const loadBoard = (): void => {
   margin-bottom: 10px;
 }
 
+.board-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .questions-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
+  flex: 1;
+  min-height: 0;
 }
 
 .category-column {
@@ -233,7 +252,6 @@ const loadBoard = (): void => {
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  min-height: 80px;
 }
 
 .question-btn.has-content {

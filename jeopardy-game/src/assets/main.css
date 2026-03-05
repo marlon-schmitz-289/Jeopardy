@@ -8,6 +8,16 @@
     --border-radius: 8px;
     --shadow: 0 4px 8px rgba(0,0,0,0.1);
     --transition: all 0.2s ease;
+
+    /* Theme color tokens (overridden by user settings via JS) */
+    --lt-accent:   #c34d7a;
+    --lt-bg-start: #ffffff;
+    --lt-bg-end:   #ff86bd;
+    --lt-card:     #f0f0f0;
+    --dk-accent:   #7c3aed;
+    --dk-bg-start: #0f172a;
+    --dk-bg-end:   #1a0a3c;
+    --dk-card:     #1e293b;
 }
 
 /* Button styles */

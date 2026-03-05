@@ -1,11 +1,9 @@
-﻿<template>
+﻿    -.  
+    ﻿<template>
   <div class="user-selection">
     <!-- Navigation Header -->
     <div class="selection-header">
       <h2>Select Players</h2>
-      <router-link to="/editor" class="editor-link">
-        ✏️ Board Editor
-      </router-link>
     </div>
 
     <!-- Controls and buttons at top -->
@@ -174,7 +172,7 @@ const confirm = (): void => {
   background: linear-gradient(to bottom, white, #ff86bd);
   padding: 20px;
   text-align: center;
-  height: 100vh;
+  height: 100%;
   font-family: 'JetBrains Mono', monospace;
   display: flex;
   flex-direction: column;
@@ -203,45 +201,30 @@ const confirm = (): void => {
   margin: 0;
 }
 
-.editor-link {
-  background: linear-gradient(135deg, #2196f3, #1976d2);
-  color: white;
-  text-decoration: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-}
-
-.editor-link:hover {
-  background: linear-gradient(135deg, #1976d2, #1565c0);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
-}
 
 .user-list-container {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  display: flex;
+  justify-content: center;
   margin: 15px 0;
-  padding: 5px;
+  overflow: hidden;
 }
 
 .user-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 450px;
-  margin: 0 auto;
+  width: 450px;
+  max-width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 5px;
+  align-content: flex-start;
 }
 
 .user-item {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.9);
@@ -576,10 +559,6 @@ const confirm = (): void => {
     font-size: 28px;
   }
 
-  .editor-link {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
 
   .user-list {
     max-width: 100%;

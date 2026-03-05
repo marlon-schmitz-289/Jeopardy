@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "electron/main.cjs",
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
@@ -11,7 +12,30 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build"
+    "type-check": "vue-tsc --build",
+    "electron:dev": "concurrently --kill-others \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron:build": "npm run build-only && electron-builder"
+  },
+  "build": {
+    "appId": "com.jeopardy.game",
+    "productName": "Jeopardy",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.games"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "dependencies": {
     "pinia": "^3.0.3",
@@ -23,10 +47,14 @@
     "@types/node": "^22.16.5",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.7.0",
+    "concurrently": "^9.1.2",
+    "electron": "^36.0.0",
+    "electron-builder": "^25.1.8",
     "npm-run-all2": "^8.0.4",
     "typescript": "~5.8.0",
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
-    "vue-tsc": "^3.0.4"
+    "vue-tsc": "^3.0.4",
+    "wait-on": "^8.0.3"
   }
 }

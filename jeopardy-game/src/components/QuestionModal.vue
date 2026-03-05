@@ -52,6 +52,19 @@
         </button>
         <button @click="close" class="control-btn close-btn">Close</button>
       </div>
+
+      <div class="award-section">
+        <span class="award-label">Award +{{ question.points }}pts to:</span>
+        <div class="player-btns">
+          <button
+              v-for="player in store.players"
+              :key="player"
+              @click="awardPoints(player)"
+              class="player-award-btn">
+            {{ player }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +74,7 @@ import { ref } from 'vue'
 import type { Question } from '@/types/game'
 import { QuestionType } from '@/types/game'
 import YouTubePlayer from './YouTubePlayer.vue'
+import { useGameStore } from '@/stores/gameStore'
 
 interface Props {
   question: Question | null
@@ -72,6 +86,7 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+const store = useGameStore()
 
 const showAnswer = ref<boolean>(false)
 const audioStatus = ref<string>('Not playing...')
@@ -131,6 +146,13 @@ const onVideoEnd = (): void => {
 
 const onVideoError = (error: string): void => {
   videoError.value = error
+}
+
+const awardPoints = (player: string): void => {
+  if (props.question) {
+    store.updateScore(player, props.question.points)
+  }
+  close()
 }
 
 const close = (): void => {
@@ -292,6 +314,56 @@ const close = (): void => {
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.award-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.video-modal .award-section {
+  border-top-color: rgba(255,255,255,0.15);
+}
+
+.award-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.video-modal .award-label {
+  color: rgba(255,255,255,0.6);
+}
+
+.player-btns {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.player-award-btn {
+  padding: 8px 18px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.player-award-btn:hover {
+  background: #388e3c;
+  transform: translateY(-2px);
 }
 
 /* Responsive design */

@@ -57,7 +57,7 @@
 
       <!-- Main Game Content -->
       <div class="game-content">
-        <ScoreBoard v-if="showScoreboard" />
+        <ScoreBoard v-if="showScoreboard" @game-reset="onGameReset" />
         <GameBoard v-else @question-selected="showQuestion" />
       </div>
 
@@ -83,7 +83,7 @@ import GameNavbar from '@/components/GameNavbar.vue'
 
 const store = useGameStore()
 
-const playersSelected = ref<boolean>(store.players.length > 0)
+const playersSelected = ref<boolean>(store.gameInProgress)
 const showScoreboard = ref<boolean>(false)
 const showPlayerManagement = ref<boolean>(false)
 const currentQuestion = ref<QuestionSelection | null>(null)
@@ -91,6 +91,7 @@ const newPlayerName = ref<string>('')
 
 const startGame = (players: string[]): void => {
   store.setPlayers(players)
+  store.startGame()
   playersSelected.value = true
 }
 
@@ -132,21 +133,27 @@ const resetGame = (): void => {
     newPlayerName.value = ''
   }
 }
+
+const onGameReset = (): void => {
+  playersSelected.value = false
+  showScoreboard.value = false
+  showPlayerManagement.value = false
+  currentQuestion.value = null
+  newPlayerName.value = ''
+}
 </script>
 
 <style scoped>
 .game-view {
-  height: 100vh;
-  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .game-content {
-  position: absolute;
-  top: 80px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -336,9 +343,6 @@ const resetGame = (): void => {
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .game-content {
-    top: 70px;
-  }
 
   .player-management-panel {
     padding: 20px;
@@ -352,12 +356,6 @@ const resetGame = (): void => {
 
   .add-player-controls {
     flex-direction: column;
-  }
-}
-
-@media (max-width: 640px) {
-  .game-content {
-    top: 60px;
   }
 }
 </style>

@@ -1,6 +1,7 @@
-﻿import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+﻿import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import GameView from '@/views/GameView.vue'
 import EditorView from '@/views/EditorView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -16,11 +17,16 @@ const routes: RouteRecordRaw[] = [
         path: '/editor',
         name: 'Editor',
         component: EditorView
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: SettingsView
     }
 ]
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
     routes
 })
 

@@ -4,6 +4,7 @@ import type { Category, Question, QuestionType } from '@/types/game'
 const PLAYERS_STORAGE_KEY = 'jeopardy-players'
 const CATEGORIES_STORAGE_KEY = 'jeopardy-categories'
 const SCORES_STORAGE_KEY = 'jeopardy-scores'
+const GAME_IN_PROGRESS_KEY = 'jeopardy-game-in-progress'
 
 function loadFromStorage<T>(key: string): T | null {
     try {
@@ -77,18 +78,21 @@ interface GameStore {
     players: string[]
     currentQuestion: Question | null
     scores: Record<string, number>
+    gameInProgress: boolean
 }
 
 const savedPlayers = loadPlayersFromStorage()
 const savedCategories = loadCategoriesFromStorage()
 const savedScores = loadScoresFromStorage(savedPlayers)
+const savedGameInProgress = loadFromStorage<boolean>(GAME_IN_PROGRESS_KEY) ?? false
 
 export const useGameStore = defineStore('game', {
     state: (): GameStore => ({
         categories: savedCategories,
         players: savedPlayers,
         currentQuestion: null,
-        scores: savedScores
+        scores: savedScores,
+        gameInProgress: savedGameInProgress
     }),
 
     actions: {
@@ -100,6 +104,11 @@ export const useGameStore = defineStore('game', {
             }, {})
             saveToStorage(PLAYERS_STORAGE_KEY, this.players)
             saveToStorage(SCORES_STORAGE_KEY, this.scores)
+        },
+
+        startGame(): void {
+            this.gameInProgress = true
+            saveToStorage(GAME_IN_PROGRESS_KEY, true)
         },
 
         addPlayer(playerName: string): void {
@@ -162,8 +171,11 @@ export const useGameStore = defineStore('game', {
                 this.scores[player] = 0
             })
 
+            this.gameInProgress = false
+
             saveToStorage(CATEGORIES_STORAGE_KEY, this.categories)
             saveToStorage(SCORES_STORAGE_KEY, this.scores)
+            saveToStorage(GAME_IN_PROGRESS_KEY, false)
         },
 
         resetBoard(): void {

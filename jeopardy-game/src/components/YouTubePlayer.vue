@@ -1,19 +1,11 @@
-﻿<template>
+﻿﻿<template>
   <div class="youtube-player-container">
     <div v-if="!isValidVideoId" class="error-message">
       Invalid YouTube URL or Video ID
     </div>
 
     <div v-else class="youtube-player">
-      <iframe
-          :src="embedUrl"
-          :width="width"
-          :height="height"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          @load="onPlayerReady"
-      ></iframe>
+      <div :id="playerId" class="player-element"></div>
 
       <div class="video-controls" v-if="showControls">
         <button @click="playVideo" class="control-btn play-btn">▶ Play</button>
@@ -28,8 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { extractYouTubeVideoId } from '@/types/game'
+
+declare global {
+  interface Window {
+    YT: any
+    onYouTubeIframeAPIReady: () => void
+  }
+}
 
 interface Props {
   videoUrl: string
@@ -38,8 +37,6 @@ interface Props {
   autoplay?: boolean
   controls?: boolean
   showCustomControls?: boolean
-  startTime?: number
-  endTime?: number
   muted?: boolean
 }
 
@@ -57,15 +54,37 @@ const props = withDefaults(defineProps<Props>(), {
   autoplay: false,
   controls: true,
   showCustomControls: false,
-  startTime: 0,
   muted: false
 })
 
 const emit = defineEmits<Emits>()
 
+const playerId = `youtube-player-${Math.random().toString(36).substr(2, 9)}`
+const player = ref<any>(null)
 const isPlayerReady = ref<boolean>(false)
 const isMuted = ref<boolean>(props.muted)
+const checkInterval = ref<number | null>(null)
 const showControls = computed(() => props.showCustomControls)
+
+// Parse timing settings embedded in the video URL as query params (t, length, muted)
+const urlSettings = computed(() => {
+  try {
+    const url = new URL(props.videoUrl)
+    return {
+      startTime: parseInt(url.searchParams.get('t') || '0') || 0,
+      length: parseInt(url.searchParams.get('length') || '0') || 0,
+      muted: url.searchParams.get('muted') === '1'
+    }
+  } catch {
+    return { startTime: 0, length: 0, muted: false }
+  }
+})
+
+const effectiveStartTime = computed(() => urlSettings.value.startTime)
+const effectiveEndTime = computed(() =>
+  urlSettings.value.length > 0 ? urlSettings.value.startTime + urlSettings.value.length : 0
+)
+const effectiveMuted = computed(() => urlSettings.value.muted || props.muted)
 
 const videoId = computed(() => {
   return extractYouTubeVideoId(props.videoUrl)
@@ -75,99 +94,164 @@ const isValidVideoId = computed(() => {
   return videoId.value !== null
 })
 
-const embedUrl = computed(() => {
-  if (!videoId.value) return ''
+const loadYouTubeAPI = (): Promise<void> => {
+  return new Promise((resolve) => {
+    if (window.YT && window.YT.Player) {
+      resolve()
+      return
+    }
 
-  const params = new URLSearchParams()
-  params.set('enablejsapi', '1')
-  params.set('origin', window.location.origin)
+    const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]')
+    if (existingScript) {
+      // Script already injected — poll until ready
+      const checkReady = setInterval(() => {
+        if (window.YT && window.YT.Player) {
+          clearInterval(checkReady)
+          resolve()
+        }
+      }, 100)
+      return
+    }
 
-  if (!props.controls) params.set('controls', '0')
-  if (props.autoplay) params.set('autoplay', '1')
-  if (props.muted) params.set('mute', '1')
-  if (props.startTime > 0) params.set('start', props.startTime.toString())
-  if (props.endTime && props.endTime > 0) params.set('end', props.endTime.toString())
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/iframe_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag)
 
-  // Disable related videos from other channels
-  params.set('rel', '0')
+    // Chain onto any existing callback so multiple instances don't clobber each other
+    const previousCallback = window.onYouTubeIframeAPIReady
+    window.onYouTubeIframeAPIReady = () => {
+      if (previousCallback) previousCallback()
+      resolve()
+    }
+  })
+}
 
-  return `https://www.youtube.com/embed/${videoId.value}?${params.toString()}`
-})
+const initPlayer = async () => {
+  if (!videoId.value) return
+
+  await loadYouTubeAPI()
+
+  player.value = new window.YT.Player(playerId, {
+    height: props.height,
+    width: props.width,
+    videoId: videoId.value,
+    playerVars: {
+      autoplay: props.autoplay ? 1 : 0,
+      controls: props.controls ? 1 : 0,
+      start: effectiveStartTime.value || 0,
+      mute: effectiveMuted.value ? 1 : 0,
+      rel: 0,
+      modestbranding: 1
+    },
+    events: {
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange,
+      onError: onPlayerError
+    }
+  })
+}
+
+const onPlayerReady = (event: any) => {
+  isPlayerReady.value = true
+
+  if (effectiveStartTime.value > 0) {
+    event.target.seekTo(effectiveStartTime.value, true)
+  }
+
+  if (effectiveEndTime.value > 0) {
+    startEndTimeCheck()
+  }
+
+  emit('ready')
+}
+
+const onPlayerStateChange = (event: any) => {
+  switch (event.data) {
+    case window.YT.PlayerState.ENDED:
+      emit('end')
+      stopEndTimeCheck()
+      break
+    case window.YT.PlayerState.PLAYING:
+      emit('play')
+      if (effectiveEndTime.value > 0) {
+        startEndTimeCheck()
+      }
+      break
+    case window.YT.PlayerState.PAUSED:
+      emit('pause')
+      stopEndTimeCheck()
+      break
+  }
+}
+
+const onPlayerError = (event: any) => {
+  emit('error', `YouTube player error: ${event.data}`)
+}
+
+const startEndTimeCheck = () => {
+  stopEndTimeCheck()
+
+  if (effectiveEndTime.value <= 0) return
+
+  checkInterval.value = window.setInterval(() => {
+    if (player.value && player.value.getCurrentTime) {
+      const currentTime = player.value.getCurrentTime()
+      if (currentTime >= effectiveEndTime.value) {
+        stopEndTimeCheck()
+        player.value.pauseVideo()
+        player.value.seekTo(effectiveStartTime.value, true)
+        emit('end')
+      }
+    }
+  }, 250)
+}
+
+const stopEndTimeCheck = () => {
+  if (checkInterval.value) {
+    clearInterval(checkInterval.value)
+    checkInterval.value = null
+  }
+}
 
 const playVideo = (): void => {
-  postMessageToPlayer('playVideo')
-  emit('play')
+  if (player.value && player.value.playVideo) {
+    player.value.playVideo()
+  }
 }
 
 const pauseVideo = (): void => {
-  postMessageToPlayer('pauseVideo')
-  emit('pause')
+  if (player.value && player.value.pauseVideo) {
+    player.value.pauseVideo()
+  }
 }
 
 const stopVideo = (): void => {
-  postMessageToPlayer('stopVideo')
+  if (player.value && player.value.stopVideo) {
+    player.value.stopVideo()
+  }
 }
 
 const toggleMute = (): void => {
+  if (!player.value) return
+
   if (isMuted.value) {
-    postMessageToPlayer('unMute')
+    player.value.unMute()
   } else {
-    postMessageToPlayer('mute')
+    player.value.mute()
   }
   isMuted.value = !isMuted.value
 }
 
-const postMessageToPlayer = (command: string, args?: any): void => {
-  const iframe = document.querySelector('iframe') as HTMLIFrameElement
-  if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage(
-        JSON.stringify({
-          event: 'command',
-          func: command,
-          args: args || []
-        }),
-        'https://www.youtube.com'
-    )
-  }
-}
-
-const onPlayerReady = (): void => {
-  isPlayerReady.value = true
-  emit('ready')
-}
-
-// Listen for YouTube player events
-const handleYouTubeMessage = (event: MessageEvent): void => {
-  if (event.origin !== 'https://www.youtube.com') return
-
-  try {
-    const data = JSON.parse(event.data)
-    if (data.event === 'video-progress') {
-      // Handle progress updates if needed
-    } else if (data.event === 'onStateChange') {
-      switch (data.info) {
-        case 0: // ended
-          emit('end')
-          break
-        case 1: // playing
-          emit('play')
-          break
-        case 2: // paused
-          emit('pause')
-          break
-      }
-    }
-  } catch (error) {
-    // Ignore parsing errors
-  }
-}
-
 onMounted(() => {
-  window.addEventListener('message', handleYouTubeMessage)
+  initPlayer()
 })
 
 onUnmounted(() => {
-  window.removeEventListener('message', handleYouTubeMessage)
+  stopEndTimeCheck()
+  if (player.value && player.value.destroy) {
+    player.value.destroy()
+  }
 })
 </script>
 
@@ -183,7 +267,8 @@ onUnmounted(() => {
   width: 100%;
 }
 
-.youtube-player iframe {
+.youtube-player iframe,
+.player-element {
   width: 100%;
   height: auto;
   min-height: 315px;

@@ -1,4 +1,4 @@
-﻿<template>
+﻿﻿<template>
   <nav class="game-navbar" :class="{ 'navbar-visible': isVisible }">
     <div class="navbar-content">
       <div class="navbar-brand">
@@ -20,6 +20,10 @@
           <span class="btn-icon">🔄</span>
           <span class="btn-text">Reset</span>
         </button>
+
+        <button @click="toggleTheme" class="nav-btn theme-btn">
+          <span class="btn-icon">{{ isDark ? '☀️' : '🌙' }}</span>
+        </button>
       </div>
 
       <div class="navbar-toggle" @click="toggleNavbar">
@@ -33,6 +37,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useTheme } from '@/composables/useTheme'
 
 interface Props {
   showScoreboard: boolean
@@ -48,6 +53,7 @@ defineProps<Props>()
 defineEmits<Emits>()
 
 const isVisible = ref<boolean>(true)
+const { isDark, toggleTheme } = useTheme()
 
 const toggleNavbar = (): void => {
   isVisible.value = !isVisible.value
@@ -56,17 +62,17 @@ const toggleNavbar = (): void => {
 
 <style scoped>
 .game-navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,240,240,0.95));
   backdrop-filter: blur(12px);
   border-bottom: 2px solid rgba(255,255,255,0.2);
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   z-index: 1000;
   transition: transform 0.3s ease;
-  transform: translateY(0);
+  -webkit-app-region: drag;
+  cursor: default;
+  user-select: none;
+  flex-shrink: 0;
 }
 
 .game-navbar.navbar-visible {
@@ -77,7 +83,7 @@ const toggleNavbar = (): void => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: 12px 24px 12px 88px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -103,6 +109,7 @@ const toggleNavbar = (): void => {
 }
 
 .nav-btn {
+  -webkit-app-region: no-drag;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -157,6 +164,16 @@ const toggleNavbar = (): void => {
   background: linear-gradient(135deg, #d32f2f, #b71c1c);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+.theme-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #333;
+}
+
+.theme-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
 .navbar-toggle {
@@ -248,34 +265,5 @@ const toggleNavbar = (): void => {
   .btn-text {
     display: block;
   }
-}
-
-/* Animation for collapsed state */
-.game-navbar:not(.navbar-visible) {
-  transform: translateY(-90%);
-}
-
-.game-navbar:not(.navbar-visible):hover {
-  transform: translateY(-80%);
-}
-
-/* Peek hint */
-.game-navbar:not(.navbar-visible)::after {
-  content: '⌄';
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.9);
-  width: 32px;
-  height: 20px;
-  border-radius: 0 0 16px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  color: #666;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 </style>

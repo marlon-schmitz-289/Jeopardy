@@ -69,35 +69,32 @@
              class="input-field"
              @keyup.enter="saveQuestion" />
 
-      <!-- YouTube Settings (Advanced) -->
+      <!-- YouTube Settings (required) -->
       <div v-if="questionData.type === 'youtube'" class="youtube-settings">
-        <details class="settings-details">
-          <summary class="settings-summary">Advanced YouTube Settings</summary>
-          <div class="settings-content">
-            <div class="setting-row">
-              <label class="setting-label">Start Time (seconds):</label>
-              <input v-model.number="youtubeSettings.startTime"
-                     type="number"
-                     min="0"
-                     class="setting-input"
-                     placeholder="0" />
-            </div>
-            <div class="setting-row">
-              <label class="setting-label">End Time (seconds):</label>
-              <input v-model.number="youtubeSettings.endTime"
-                     type="number"
-                     min="0"
-                     class="setting-input"
-                     placeholder="Leave empty for full video" />
-            </div>
-            <div class="setting-row">
-              <label class="setting-checkbox">
-                <input v-model="youtubeSettings.muted" type="checkbox" />
-                Start muted
-              </label>
-            </div>
+        <div class="settings-content">
+          <div class="setting-row">
+            <label class="setting-label">Start Time (seconds) *:</label>
+            <input v-model.number="youtubeSettings.startTime"
+                   type="number"
+                   min="0"
+                   class="setting-input"
+                   placeholder="0" />
           </div>
-        </details>
+          <div class="setting-row">
+            <label class="setting-label">Length (seconds) *:</label>
+            <input v-model.number="youtubeSettings.length"
+                   type="number"
+                   min="1"
+                   class="setting-input"
+                   placeholder="Required" />
+          </div>
+          <div class="setting-row">
+            <label class="setting-checkbox">
+              <input v-model="youtubeSettings.muted" type="checkbox" />
+              Start muted
+            </label>
+          </div>
+        </div>
       </div>
 
       <div class="modal-actions">
@@ -146,7 +143,7 @@ const questionData = reactive<Partial<Question>>({
 
 const youtubeSettings = reactive({
   startTime: 0,
-  endTime: 0,
+  length: 0,
   muted: false
 })
 
@@ -162,7 +159,7 @@ const canSave = computed(() => {
   const hasAnswer = questionData.answer?.trim()
 
   if (questionData.type === 'youtube') {
-    return hasQuestion && hasAnswer && isValidYouTubeUrl.value
+    return hasQuestion && hasAnswer && isValidYouTubeUrl.value && youtubeSettings.length > 0
   }
 
   return hasQuestion && hasAnswer
@@ -207,7 +204,7 @@ const onTypeChange = (): void => {
   imageError.value = false
   Object.assign(youtubeSettings, {
     startTime: 0,
-    endTime: 0,
+    length: 0,
     muted: false
   })
 }
@@ -232,8 +229,8 @@ const saveQuestion = (): void => {
         if (youtubeSettings.startTime > 0) {
           params.set('t', youtubeSettings.startTime.toString())
         }
-        if (youtubeSettings.endTime > 0) {
-          params.set('end', youtubeSettings.endTime.toString())
+        if (youtubeSettings.length > 0) {
+          params.set('length', youtubeSettings.length.toString())
         }
         if (youtubeSettings.muted) {
           params.set('muted', '1')
@@ -302,10 +299,14 @@ const initializeData = (): void => {
 
     // Parse YouTube settings if it's a YouTube video
     if (question.type === 'youtube' && question.question) {
-      const url = new URL(question.question)
-      youtubeSettings.startTime = parseInt(url.searchParams.get('t') || '0')
-      youtubeSettings.endTime = parseInt(url.searchParams.get('end') || '0')
-      youtubeSettings.muted = url.searchParams.get('muted') === '1'
+      try {
+        const url = new URL(question.question)
+        youtubeSettings.startTime = parseInt(url.searchParams.get('t') || '0') || 0
+        youtubeSettings.length = parseInt(url.searchParams.get('length') || '0') || 0
+        youtubeSettings.muted = url.searchParams.get('muted') === '1'
+      } catch {
+        Object.assign(youtubeSettings, { startTime: 0, length: 0, muted: false })
+      }
     }
   }
 }

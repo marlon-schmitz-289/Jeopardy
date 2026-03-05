@@ -42,7 +42,7 @@ export interface YouTubePlayerOptions {
         autoplay?: 0 | 1
         controls?: 0 | 1
         start?: number
-        end?: number
+        length?: number
         loop?: 0 | 1
         mute?: 0 | 1
         rel?: 0 | 1

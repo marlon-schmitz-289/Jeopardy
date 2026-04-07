@@ -66,9 +66,3 @@ Distributable files are output to `jeopardy-game/release/`.
 - [Pinia](https://pinia.vuejs.org/) — state management
 - [Vue Router](https://router.vuejs.org/)
 - [Electron](https://www.electronjs.org/) — desktop packaging
-
----
-
-## Release Notes
-
-See [RELEASE_NOTES.md](./RELEASE_NOTES.md) for a full changelog.

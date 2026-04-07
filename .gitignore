@@ -349,6 +349,9 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
+# AI agents markdown files
+[Aa][Gg][Ee][Nn][Tt][Ss].[Mm][Dd]
+
 # Azure Stream Analytics local run output
 ASALocalRun/
 

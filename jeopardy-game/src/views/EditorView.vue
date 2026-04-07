@@ -63,9 +63,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { useGameStore } from '@/stores/gameStore'
-import type { Question, QuestionType } from '@/types/game'
+import { QuestionType } from '@/types/game'
+import type { Question } from '@/types/game'
 import QuestionEditorWindow from '@/components/QuestionEditorWindow.vue'
 
 const store = useGameStore()
@@ -117,7 +118,7 @@ const clearQuestion = (data: { catId: number; qId: number }): void => {
   store.updateQuestion(catId, qId, {
     question: '',
     answer: '',
-    type: 'text'
+    type: QuestionType.Text
   })
   closeEditor()
 }

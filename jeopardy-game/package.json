@@ -14,7 +14,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "electron:dev": "concurrently --kill-others \"vite\" \"wait-on http://localhost:5173 && electron .\"",
-    "electron:build": "npm run build-only && electron-builder"
+    "electron:build": "npm run build-only && electron-builder",
+    "electron:build:portable": "npm run build-only && electron-builder --win portable && node -e \"const fs=require('node:fs');const paths=['release/win-unpacked','release/builder-debug.yml','release/builder-effective-config.yaml'];for(const p of paths){if(fs.existsSync(p))fs.rmSync(p,{recursive:true,force:true});}\""
   },
   "build": {
     "appId": "com.jeopardy.game",
@@ -31,7 +32,9 @@
       "category": "public.app-category.games"
     },
     "win": {
-      "target": "nsis"
+      "target": "portable",
+      "artifactName": "Jeopardy-Portable-${version}.${ext}",
+      "signAndEditExecutable": false
     },
     "linux": {
       "target": "AppImage"
